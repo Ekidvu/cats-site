@@ -123,15 +123,19 @@ let authPicDesc = document.createElement('span');
 let popupInit = (id, cats) => {
   let popup_element; 
   let editBtnOnCard = document.querySelectorAll('.editBtn');
+  let editBtnOnCardInner = document.querySelectorAll('.editBtn').firstChild;
   let partsOfCards = document.querySelectorAll(`.part_of_card`);  
-  let addButton = document.querySelector('.btn, #add');
+  let addButton = document.querySelector('#add');
+  let addButtonInner = document.querySelector('#add').firstChild;
+  console.log(addButtonInner);
 
-  catsDataBase = [...cats];
+  // catsDataBase = [...cats];
   // console.log(catsDataBase);
   switch (event.target) {
     case authBtn:
       popup_element = divAuth;
       break
+    case editBtnOnCardInner:
     case editBtnOnCard[id-1].firstChild: {
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
@@ -145,10 +149,11 @@ let popupInit = (id, cats) => {
       showCatInfo(id,[...cats])
       console.log();
       }  break
-    case addButton:
-      document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
-
-      popup_element = document.querySelector('#edit-modal');
+    case addButtonInner:
+    case addButton: {
+      popup_element = document.querySelector('#edit-modal'); 
+      document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!"; }
+      break
       // showForm(cats.length,cats);
     default:
       break
@@ -169,9 +174,6 @@ function closeByEsc() {
   document.removeEventListener('keyup', closeByEsc);
 }
 
-let authBtn = document.querySelector('#author');
-authBtn.addEventListener('click', popupInit);
-
 
 divAuthCloseBtn.classList.add('modal-close', 'btn', 'closeBtnAuthor');
 divAuthContain.id = "divAuthContain";
@@ -182,6 +184,8 @@ authPic.src = 'http://ae04.alicdn.com/kf/HTB1s2ShXUvrK1RjSspcq6zzSXXaw/HDARTISAN
 authPicDesc.innerText = 'Ух, ты!';
 document.body.append(divAuth);
 
+let authBtn = document.querySelector('#author');
+authBtn.addEventListener('click', popupInit);
 
 // setTimeout(() => { 
 // closeByEsc()

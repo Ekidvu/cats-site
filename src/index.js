@@ -45,7 +45,7 @@ function showCat(cat, cats) {
     btnEditDiv.classList.add('edit_btn_div',);
     btnEdit.classList.add("btn", "editBtn");
     btnEditIcon.className = "fa-solid fa-pen";
-    btnEditIcon.setAttribute('onclick', `popupInit(${cat.id},cats)`);
+    btnEdit.setAttribute('onclick', `popupInit(${cat.id},cats)`);
     newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), cats`);
     newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},cats)`);
     btnEditIcon.setAttribute('data-action', "edit");
