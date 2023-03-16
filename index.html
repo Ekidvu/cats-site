@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.css" integrity="sha512-+ouAqATs1y4kpPMCHfKHVJwf308zo+tC9dlEYK9rKe7kiP35NiP+Oi35rCFnc16zdvk9aBkDUtEO3tIPl0xN5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script></script>
+</head>
+<body>
+    <header>
+        <a href="#" class="header__logo"><i class="fa-solid fa-paw" id="logo"></i>Забавные Котямбы</a>      
+        <!-- <div class="header__controls">
+            <i class="fa-solid fa-magnifying-glass" id="header__glass"></i>
+        </div> -->
+        <button class="btn" id="add" onclick="popupInit(cats.length,cats)"><i class="fa-solid fa-plus" id="header__plus"></i></button>      
+    </header>
+    <main class="main container">
+        <section class="cards">
+            <!-- <i class="fa-solid fa-heart cat-like" onclick="setLike(1,this)"></i> -->
+        </section>
+    </main>
+    <footer>
+        <span class="copyright">©2023 Made by <h5 id="author">ekidvu</h5></span>
+        <div class="socials">
+            <a class="footer__a" href="#">
+                <i class="fa-brands fa-vk socials__icon"></i>
+            </a>
+            <a href="#" class="footer__a">
+                <i class="fa-brands fa-twitter"></i>
+            </a>
+            <a href="#" class="footer__a">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="#" class="footer__a">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <a href="#" class="footer__a">
+                <i class="fa-brands fa-wordpress"></i>
+            </a>                                       
+        </div>        
+    </footer>
+<!-- -------------------- -->
+    <div class="modal" data-type="edit" id="edit-modal">        
+        <div class="modal-container">
+            <div class="modal-close btn"><i class="fa-solid fa-xmark" id="btn__modal"></i></div>
+            <h1>Cмотр красавца</h1>
+            <form action="" id="edit">
+                <div class="form__info" id="form__name__div">
+                    <label for="upd__name">Имя питомца</label>
+                    <input id="upd__name" name="name" placeholder="Введите имечко" type="text" >
+                </div>
+                <div class="form__info form-span-2">
+                    <label id="show__img"><img src="" alt=""></label>
+                </div>
+                <div class="form__info form-span-3">
+                    <label for="upd__img">Новое изображение</label>
+                    <input id="upd__img" name="url" type="url" placeholder="Ссылка на изображение">
+                </div>
+                <div class="form__info">
+                    <label for="upd__age">Возраст</label>
+                    <input id="upd__age" name="age" type="number" min="0" max="50" placeholder="Обозначить живучесть">
+                </div>
+                <div class="form__info">
+                    <label for="upd__rate" >Рейтинг</label>
+                    <input id="upd__rate" name="rate" type="number" min="0" max="10" placeholder="Выбрать няшность">
+                </div>
+                <div class="form__info" id="editCatLikeDiv">            
+                    <input id="upd__favour" name="favourite" type="checkbox">
+                    <label for="upd__favour">любо!</label>
+                </div>
+                <div class="form__info form-span-3">
+                    <label for="upd__text" placeholder="Введите что-нибудь">Описание</label>
+                    <textarea id="upd__text" name="description" type="text" rows="3" placeholder="Опишите красавца"></textarea>
+                </div>
+                <button class="btn" id="btn__upd" type="submit" onclick="catSubmitFormInfo(event)">Обновить</button>
+            </form>
+        </div>
+    </div>
+<!-- -------------------- -->
+
+    <div class="modal" data-type="show_cat_info" id="show-modal-container">
+        <div class="modal-container" id="modal-show-div">
+            <div class="modal-close btn"><i class="fa-solid fa-xmark" id="btn__modal"></i></div>
+            <h1>Каков красавец!</h1>
+            <div class="container_showCatInfo">
+                <!-- <div class=""></div> -->
+                <div class="imgDiv__showCat">
+                    <label id="show__img__label"><img src="" alt=""></label></div>
+                <div class="" id="stars_block_info"></div>
+                <!-- <div class=""></div> -->
+                <div class="" id="description"><h1></h1><span class="text"></span></div>
+                <!-- <div class=""></div>                 -->
+            </div> 
+        </div>      
+    </div>
+
+
+    <template id="form">
+        <div class="card-template">
+            <img src="#" alt="Изображение" class="card__image">
+            <a href="#" class=""><h2 class="card__name"></h2></a>
+            <button class="card_like" aria-label="Какой котяра!">
+                <i class="fa-solid fa-heart fa-2x"></i>
+            </button>
+        </div>
+    </template>
+
+
+    <script src="./src/cats.js"></script>
+    <script src="./src/api.js"></script>
+    <script src="./src/card.js"></script>
+    <script src="./src/index.js"></script>
+    <script src="./src/\zForm.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+
+
+/* #show-modal-container #modal-show-div {
+
+} */
+
+/* .container_showCatInfo p {
+    grid-column: 1 / 4;
+    height: 30px;
+} */
+
+.container_showCatInfo {
+    /* width: 600px; */
+    height: 100%;
+    width: 100%; 
+    /* position: absolute; */
+
+    /* max-width: 400px;
+    max-height: 500px; */
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+
+}
+
+.container_showCatInfo img {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    /* height: 100%; */
+    /* inline-size: auto; */
+}
+
+/* #show__img {
+    max-width: 300px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* #show__img img {
+    height: 300px;
+} */
+
+/* #show__img__label {
+    width: 100%;
+    height: 100%;
+} */
+
+/* #show__img__show img {
+    height: 300px;
+} */
+
+#description {
+    grid-column-start: span 2;
+}
+
+/* .imgDiv__showCat {
+
+} */
+
+
+
+/* ----------Author--------- */
+
+.closeBtnAuthor {
+    position: absolute;
+    /* right: 230px;
+    top: 160px;  */
+}
+
+#divAuthContain span {
+    margin: 15px 20px;
+    font-size: 25px;
+}
+
+/* #divAuthContain img {
+} */
+
+/* .modalAuth {
+} */

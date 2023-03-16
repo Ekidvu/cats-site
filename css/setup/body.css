@@ -1,0 +1,58 @@
+html {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #FAF9EF;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    min-height: 100vh;
+    color: var(--text-main-color);
+    margin: 0;
+    padding: 0;
+    /* position: relative; */
+    background: no-repeat center/cover url(https://klike.net/uploads/posts/2022-12/1670398433_3-52.jpg);
+    background-size: fit-content;
+}
+
+.scale {
+    transition: 1s;
+    /* overflow: hidden; */
+}
+.scale:hover {
+    transform: scale(1.05);
+}
+
+/* .scale img {
+    transition: 1s; 
+    display: block;
+   }
+
+.scale img:hover {
+    transform: scale(1.2);
+} */
+/* .zoom.scale:hover {
+    transform: scale(1.5);
+}
+
+.zoom.scale {
+
+} */
+
+.copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#author {
+    margin: 3px 6px;
+    padding: 4px 5px 4px 4px;
+    border: 2px solid black;
+    border-radius: 37%;
+    /* width: 10px 10px; */
+
+}

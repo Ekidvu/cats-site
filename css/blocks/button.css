@@ -1,0 +1,31 @@
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: background-color 0.3s ease-in;
+}
+
+.btn:hover, .btn:focus {
+    color: rgba(255, 208, 0, 0.945);
+    background-color: rgb(119, 44, 189);
+    cursor: pointer;
+}
+
+header .btn {
+    border-radius: 20px;
+    background-color: #272b29;
+    color: rgb(167, 230, 187);
+    padding: 8px 10px 6px 11.1px;
+    font-size: 30px;    
+}
+
+/* #add {
+    padding-top: 3px;
+    padding-bottom: 0px;    
+} */
+
+
+
+/* color: rgb(167, 230, 187); 
+color: rgb(37, 241, 102); */
