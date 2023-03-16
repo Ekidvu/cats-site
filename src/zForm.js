@@ -24,8 +24,52 @@ let refresh = () => {
 }
 refresh()
 
+{/* <label for="upd__name">Имя питомца</label>
+<input id="upd__name" name="name" placeholder="Введите имечко" type="text" >
+</div>
+<div class="form__info form-span-2">
+<label id="show__img"><img src="" alt=""></label>
+</div>
+<div class="form__info form-span-3">
+<label for="upd__img">Новое изображение</label>
+<input id="upd__img" name="url" type="url" placeholder="Ссылка на изображение">
+</div>
+<div class="form__info">
+<label for="upd__age">Возраст</label>
+<input id="upd__age" name="age" type="number" min="0" max="50" placeholder="Обозначить живучесть">
+</div>
+<div class="form__info">
+<label for="upd__rate" >Рейтинг</label>
+<input id="upd__rate" name="rate" type="number" min="0" max="10" placeholder="Выбрать няшность">
+</div>
+<div class="form__info" id="editCatLikeDiv">            
+<input id="upd__favour" name="favourite" type="checkbox">
+<label for="upd__favour">любо!</label>
+</div>
+<div class="form__info form-span-3">
+<label for="upd__text" placeholder="Введите что-нибудь">Описание</label>
+<textarea id="upd__text" name="description" type="text" rows="3" placeholder="Опишите красавца"></textarea>
+</div>
+<button class="btn" id="btn__upd" type="submit" onclick="catSubmitFormInfo(event)">Обновить</button>
+</form> */}
 
 const showForm = (id,cats) => {
+    if (id<0) {
+    let infoPlaceholders = document.querySelectorAll('[type]');
+    let img = document.querySelector('form img');
+    for (let i=0;i<infoPlaceholders.length;i++) {
+    if (infoPlaceholders[i].type === "checkbox") {
+        infoPlaceholders[i].checked = false;
+    } else if (infoPlaceholders[i].type === "url") {
+        infoPlaceholders[i] = "Ссылка на изображение"; 
+    } else if (infoPlaceholders[i].name = 'name') {
+        infoPlaceholders[i] = "Введите имечко";
+    } else if (infoPlaceholders[i].name = "rate") {
+        infoPlaceholders[i] = "Выбрать няшность";
+    } else if (infoPlaceholders[i].name = "description") {
+        infoPlaceholders[i] = "Опишите красавца";
+    };
+    } else {
     formInfo = {...catsInfo[id-1]};
     let infoPlaceholders = document.querySelectorAll('[type]');
     let img = document.querySelector('form img');
@@ -39,10 +83,10 @@ const showForm = (id,cats) => {
                 if (key === infoPlaceholders[i].name) {
                     infoPlaceholders[i].placeholder = formInfo[key];
                 }
-            }
+            }}
         }
-    }
-    // document.querySelector('#edit-modal').classList.add("active");
+    }}
+
     document.querySelector('#btn__upd').addEventListener('click', () => {
         document.querySelector('#edit-modal').classList.remove("active");
         console.log(); 
@@ -80,10 +124,7 @@ catSubmitFormInfo = (event) => {
 } 
 
 function showCatInfo(id,cats) {
-    // document.querySelector('#show-modal-container').classList.add('active');
-    // let idShowCat = event.target.parentElement.id;
 
-    // ТУТ ТЕРЯЕТСЯ cats //
     console.log(catsInfo);
     let currentCat = {...catsInfo[id-1]};
     
@@ -125,94 +166,3 @@ function showCatInfo(id,cats) {
 // }
 
 
-
-
-
-// setTimeout(()=> {
-    // funcForShowCat = document.querySelectorAll('.cards .part_of_card:not(:nth-child(2))');
-    // funcForShowCat.forEach(e=> {
-    //     e.addEventListener('click', showCatInfo)
-    // })    
-// },500);
-
-
-
-
-
-// let pups = document.querySelector('[data-show-catInfo]');
-// console.log(pups);
-
-// const showCatInfo = (id,catsDataBase,callback,event) => {
-//     document.querySelector('#show-modal').classList.add('active');
-//     console.log(event);  
-
-// }
-// console.log(showInfoStarter);
-// console.log(event.target.id);  
-
-
-
-
-
-
-// let funcForShowCat = document.querySelectorAll('.cards .part_of_card:not(:nth-child(2))');
-
-// console.log(funcForShowCat);
-
-// funcForShowCat.addEventListener('click', function showCatInfo(id,catsDataBase,callback,event) {
-//         document.querySelector('#show-modal').classList.add('active');
-//         console.log(event);  
-    
-// })
-
-
-
-
-
-// showInfoStarter
-// data-type="show_cat_info"
-
-// let catsInfo = [...cats];
-
-
-
-// let newData;
-// catEditForm(id=0, newData, (updatedCats)=> {
-// })
-
-
-// ---------------------------
-
-// document.forms["myform"].submit();
-
-// function catEditForm(id, el) {
-//     Array.from(modals).find(m => m.dataset.type === el.dataset.action).classList.add('active');
-//     let cat = cats.find(cat => cat.id === id);
-//     for (let i=0;i < editForm.elements.length; i++) {
-//         let infoPart = editForm.elements[i];
-//         if (infoPart.name && cat[infoPart.name]) {
-//             if (infoPart.type === "checkbox") {
-//                 infoPart.checked = cat[infoPart.name];
-//             }
-//             infoPart.name = cat[infoPart.name];
-//         }
-//     } 
-// }
-
-// function catEditClose(id, el) {
-//     Array.from(modals).find(m => m.dataset.type === el.dataset.action).classList.add('active');
-//     let cat = cats.find(cat => cat.id === id);
-//     for (let i=0;i < editForm.elements.length; i++) {
-//         let infoPart = editForm.elements[i];
-//         if (infoPart.name && cat[infoPart.name]) {
-//             if (infoPart.type === "checkbox") {
-//                 infoPart.checked = cat[infoPart.name];
-//             }
-//             infoPart.name = cat[infoPart.name];
-//         }
-//     } 
-// }
-
-
-
-// console.log(modals)

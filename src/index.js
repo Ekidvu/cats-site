@@ -88,21 +88,9 @@ function showCat(cat, cats) {
     btnEditDiv.appendChild(btnEdit)
     newCatDiv.append(newCatNameDiv, btnEditDiv, newCatRateDiv);
     cards.appendChild(newCatDiv);
-    // console.log(cards);
-    // document.querySelectorAll('.part_of_card:not(:nth-child(2))').addEventListener('click', showCatInfo);
 }
 
-// funcForShowCat = document.querySelectorAll('.cards .part_of_card:not(:nth-child(2))');
-// funcForShowCat.forEach(e=> {
-//     e.addEventListener('click', showCatInfo)
-// })  
 
 
 
-// console.log(cards);
-
-
-// setTimeout(()=> {
-//     console.log(catsDataBase);
-// },400)
 

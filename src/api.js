@@ -11,7 +11,3 @@ let newInfo = {
 
 
 
-// let authorName = document.querySelector('#author').firstChild;
-// authorName.id = "author-text";
-// console.log(authorName);
-

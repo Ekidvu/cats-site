@@ -118,30 +118,22 @@ let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
 
 
-// console.log(document.querySelector('#edit').previousElementSibling.innerText);
-
 let popupInit = (id, cats) => {
   let popup_element; 
   let editBtnOnCard = document.querySelectorAll('.editBtn');
-  let editBtnOnCardInner = document.querySelectorAll('.editBtn').firstChild;
   let partsOfCards = document.querySelectorAll(`.part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
-  console.log(addButtonInner);
-
-  // console.log(cats);
-  // catsDataBase = [...cats];
-  // console.log(catsDataBase);
 
   switch (event.target) {
     case authBtn:
       popup_element = divAuth;
       break
-    case editBtnOnCardInner:
-    case editBtnOnCard[id-1].firstChild: {
+    case editBtnOnCard[id-1]:
+    case editBtnOnCard[id-1].firstChild:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
-      showForm(id,catsInfo); }
+      showForm(id,catsInfo);
       break
     case partsOfCards[id*2-2]:
     case partsOfCards[id*2-1]: {
@@ -152,16 +144,14 @@ let popupInit = (id, cats) => {
     case addButton: {
       popup_element = document.querySelector('#edit-modal'); 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!"; }
-      break
-      // showForm(cats.length,cats);
+      showForm(false,cats);
+      break      
     default:
       break
   }
   popup_element.classList.add('active');
   document.addEventListener('keyup', closeByEsc);
 }
-// btnEditIcon
-// newCatNameDiv
 
 function closeByEsc() {  
   let close = document.querySelectorAll('.modal-close');
@@ -172,7 +162,6 @@ function closeByEsc() {
   }
   document.removeEventListener('keyup', closeByEsc);
 }
-
 
 divAuthCloseBtn.classList.add('modal-close', 'btn', 'closeBtnAuthor');
 divAuthContain.id = "divAuthContain";
@@ -186,24 +175,3 @@ document.body.append(divAuth);
 let authBtn = document.querySelector('#author');
 authBtn.addEventListener('click', popupInit);
 
-// setTimeout(() => { 
-// closeByEsc()
-//     },500)
-
-
-
-
-
-// document.removeEventListener('keyup', (event) => {
-//   console.log(event.key);
-//   let close = document.querySelector('.modal-close').parentElement.parentElement;
-//   console.log(close);
-// })
-
-    // setTimeout(() => { 
-    //   let close = document.querySelector('.modal-close btn').parentElement.parentElement;
-    //   console.log(close);        
-    // },500)
-
-// let close = document.querySelector('.modal-close btn').parentElement.parentElement;
-// console.log(close);
