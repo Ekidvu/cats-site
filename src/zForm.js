@@ -9,6 +9,7 @@ let editForm = document.forms.edit;
 let newFormInfo = {};
 let formInfo;
 let funcForShowCat
+let updatedCats
 // let partsOfCards = document.querySelectorAll(`.part_of_card:not(:nth-child(2))`);
 // let addForm = document.forms.add;
 
@@ -23,8 +24,9 @@ let refresh = () => {
 }
 refresh()
 
+
 const showForm = (id,cats) => {
-    formInfo = {...cats[id-1]};
+    formInfo = {...catsInfo[id-1]};
     let infoPlaceholders = document.querySelectorAll('[type]');
     let img = document.querySelector('form img');
     for (let i=0;i<infoPlaceholders.length;i++) {
@@ -40,10 +42,10 @@ const showForm = (id,cats) => {
             }
         }
     }
-    console.log(cats);
     // document.querySelector('#edit-modal').classList.add("active");
     document.querySelector('#btn__upd').addEventListener('click', () => {
         document.querySelector('#edit-modal').classList.remove("active");
+        console.log(); 
     });
 };
 
@@ -63,37 +65,27 @@ catSubmitFormInfo = (event) => {
 
     setNewCat(newInfo, (cat) => {
         catsInfo = [...cats];
-    }) 
+    })
 
-    catEditForm(newData.id, newData, (updatedCats)=> {
-        // console.log(updatedCats);
-        console.log(catsInfo);
-        showAllCats(catsInfo)
-    })    
-} 
-
-const catEditForm = (id, newData, callback) => {
-    let updatedCats = null;
     catsInfo = catsInfo.map(function(cat) {
-        if (cat.id === id) {
+        if (cat.id === newData.id) {
             updatedCats = {...cat, ...newData};
             return updatedCats;
         }
         // console.log(updatedCats); 
         return cat; 
-    })        
-    console.log(updatedCats); 
-    callback(updatedCats);
-}
-
+    })  
+    // console.log(catsInfo);
+    showAllCats(catsInfo)
+} 
 
 function showCatInfo(id,cats) {
     // document.querySelector('#show-modal-container').classList.add('active');
     // let idShowCat = event.target.parentElement.id;
 
     // ТУТ ТЕРЯЕТСЯ cats //
-    console.log(cats);
-    let currentCat = {...cats[id-1]};
+    console.log(catsInfo);
+    let currentCat = {...catsInfo[id-1]};
     
     let imgDiv = document.querySelector('#show__img__label img');
     imgDiv.src = currentCat.img_link;
@@ -101,6 +93,39 @@ function showCatInfo(id,cats) {
     showCatDesc.firstChild.innerText = `${currentCat.name}, ${currentCat.age}`;
     showCatDesc.lastChild.innerText = `${currentCat.description}`;     
 }
+
+// const setNewCat = (dataNewCat, callback) => {
+//     const newCat = {            
+//         ...dataNewCat,
+//         id: cats.length + 1
+//     }
+
+//     let switchNewCatIsNew;
+//     cats.forEach((e,i)=> {
+//         switchNewCatIsNew = e.name !== newCat.name && e.age !== newCat.age && e.description !== newCat.description ? true : false
+//     })
+//     if (switchNewCatIsNew === true) { cats.push(newCat) }
+    
+//     callback(newCat)  
+// }
+
+// const catEditForm = (id, newData, callback) => {
+//     // let updatedCats = null;
+//     catsInfo = catsInfo.map(function(cat) {
+//         if (cat.id === id) {
+//             updatedCats = {...cat, ...newData};
+//             return updatedCats;
+//         }
+//         // console.log(updatedCats); 
+//         return cat; 
+//     })        
+//     console.log(updatedCats);
+//     // catsInfo = updatedCats;
+//     callback(updatedCats);
+// }
+
+
+
 
 
 // setTimeout(()=> {

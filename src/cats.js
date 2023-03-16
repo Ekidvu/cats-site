@@ -129,8 +129,10 @@ let popupInit = (id, cats) => {
   let addButtonInner = document.querySelector('#add').firstChild;
   console.log(addButtonInner);
 
+  // console.log(cats);
   // catsDataBase = [...cats];
   // console.log(catsDataBase);
+
   switch (event.target) {
     case authBtn:
       popup_element = divAuth;
@@ -139,15 +141,12 @@ let popupInit = (id, cats) => {
     case editBtnOnCard[id-1].firstChild: {
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
-      // console.log([...catsDataBase]);
-      // console.log(cats);
-      showForm(id,cats); }
+      showForm(id,catsInfo); }
       break
     case partsOfCards[id*2-2]:
     case partsOfCards[id*2-1]: {
       popup_element = document.querySelector('#show-modal-container')
-      showCatInfo(id,[...cats])
-      console.log();
+      showCatInfo(id,[...catsInfo])
       }  break
     case addButtonInner:
     case addButton: {
