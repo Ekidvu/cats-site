@@ -139,12 +139,13 @@ let popupInit = (id, cats) => {
     case partsOfCards[id*2-1]: {
       popup_element = document.querySelector('#show-modal-container')
       showCatInfo(id,[...catsInfo])
-      }  break
+      } break
     case addButtonInner:
     case addButton: {
       popup_element = document.querySelector('#edit-modal'); 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!"; }
-      showForm(false,cats);
+      refresh()
+      showForm(false);
       break      
     default:
       break
