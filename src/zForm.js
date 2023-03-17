@@ -17,19 +17,21 @@ let img = document.querySelector('form img');
 // let partsOfCards = document.querySelectorAll(`.part_of_card:not(:nth-child(2))`);
 // let addForm = document.forms.add;
 
-let refresh = () => { 
-    modals.forEach(m=> {
-        let close = m.querySelector('.modal-close');
-        close.addEventListener('click', () => {
-            m.classList.remove('active');
-        })
-    });
-    editForm.reset();
-}
-refresh()
+// let refresh = () => { 
+//     modals.forEach(m=> {
+//         let close = m.querySelector('.modal-close');
+//         close.addEventListener('click', () => {
+//             m.classList.remove('active');
+//         })
+//     });
+//     editForm.reset();
+// }
+// refresh()
 
-/* <label for="upd__img">Новое изображение</label>
-<input id="upd__img" name="url" type="url" placeholder="Ссылка на изображение"> */
+// let close = m.querySelector('.modal-close');
+// close.addEventListener('click', () => {
+//     m.classList.remove('active');
+// })
 
 const showForm = (id,catsInfo) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
@@ -79,9 +81,11 @@ const showForm = (id,catsInfo) => {
     document.querySelector('#btn__upd').addEventListener('click', (event) => {
         catSubmitFormInfo(event);
         document.querySelector('#edit-modal').classList.remove("active");
-        // editForm.reset();
-        // refresh()
+        editForm.reset();
     });
+    document.querySelector('#edit-modal .modal-close').addEventListener('click', () => {
+        document.querySelector('#edit-modal').classList.remove("active");
+    })
 };
 // console.log(document.querySelector(`#id_4`).style.backgroundImage.slice(4,-1));
 
@@ -138,14 +142,16 @@ catSubmitFormInfo = (event) => {
 
 function showCatInfo(id,cats) {
 
-    // console.log(catsInfo);
     let currentCat = {...catsInfo[id-1]};
     
     let imgDiv = document.querySelector('#show__img__label img');
     imgDiv.src = currentCat.img_link;
     let showCatDesc = document.querySelector('#description');
     showCatDesc.firstChild.innerText = `${currentCat.name}, ${currentCat.age}`;
-    showCatDesc.lastChild.innerText = `${currentCat.description}`;     
+    showCatDesc.lastChild.innerText = `${currentCat.description}`;
+    document.querySelector('#show-modal-container .modal-close').addEventListener('click', () => {
+        document.querySelector('#show-modal-container').classList.remove('active');
+    })     
 }
 
 // const setNewCat = (dataNewCat, callback) => {

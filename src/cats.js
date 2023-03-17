@@ -116,7 +116,7 @@ let divAuthContain = document.createElement('div');
 let divAuthCloseBtn = document.createElement('button');
 let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
-
+let authBtn = document.querySelector('#author');
 
 let popupInit = (id, catsInfo) => {
   let popup_element; 
@@ -141,9 +141,11 @@ let popupInit = (id, catsInfo) => {
     case addButton: {
       popup_element = document.querySelector('#edit-modal'); 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!"; }
-      refresh()
       showForm(false);
-      break      
+      break
+    // case authBtn:
+    //   popup_element = document.querySelector('.modalAuth')
+    //   break      
     default:
       break
   }
@@ -166,13 +168,19 @@ divAuthContain.id = "divAuthContain";
 divAuthContain.append(divAuthCloseBtn, authPicDesc, authPic);
 divAuth.append(divAuthContain);
 divAuth.classList.add('modal', 'modalAuth');
+authBtn.setAttribute('onclick', 'popupInitAuth()')
 authPic.src = 'http://ae04.alicdn.com/kf/HTB1s2ShXUvrK1RjSspcq6zzSXXaw/HDARTISAN-Vrolijk-Schilderij.jpg';
 authPicDesc.innerText = 'Ух, ты!';
 document.body.append(divAuth);
 
-let authBtn = document.querySelector('#author');
-authBtn.addEventListener('click', () => {
-  divAuth.classList.add('active');
-  document.addEventListener('keyup', closeByEsc);
-});
+
+const popupInitAuth = () => {
+  let modalAuthCloseButton = document.querySelector('.modalAuth');
+  modalAuthCloseButton.classList.add('active');
+  document.querySelector('.closeBtnAuthor').addEventListener('click', () => {
+    modalAuthCloseButton.classList.remove('active');
+    document.addEventListener('keyup', closeByEsc);
+  });
+}
+
 
