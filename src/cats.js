@@ -126,9 +126,6 @@ let popupInit = (id, catsInfo) => {
   let addButtonInner = document.querySelector('#add').firstChild;
 
   switch (event.target) {
-    case authBtn:
-      popup_element = divAuth;
-      break
     case editBtnOnCard[id-1]:
     case editBtnOnCard[id-1].firstChild:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
@@ -174,5 +171,8 @@ authPicDesc.innerText = 'Ух, ты!';
 document.body.append(divAuth);
 
 let authBtn = document.querySelector('#author');
-authBtn.addEventListener('click', popupInit);
+authBtn.addEventListener('click', () => {
+  divAuth.classList.add('active');
+  document.addEventListener('keyup', closeByEsc);
+});
 

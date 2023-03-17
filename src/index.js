@@ -1,6 +1,5 @@
 let cards = document.querySelector('.cards');
 let catsInfo = [...cats];
-
 newInfo.id = catsInfo.length + 1
 catsInfo.push(newInfo)
 
