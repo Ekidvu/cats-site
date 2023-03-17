@@ -184,3 +184,5 @@ const popupInitAuth = () => {
 }
 
 
+// class="fa-regular fa-star"
+// class="fa-solid fa-star"
