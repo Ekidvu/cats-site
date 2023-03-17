@@ -118,10 +118,10 @@ let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
 
 
-let popupInit = (id, cats) => {
+let popupInit = (id, catsInfo) => {
   let popup_element; 
   let editBtnOnCard = document.querySelectorAll('.editBtn');
-  let partsOfCards = document.querySelectorAll(`.part_of_card`);  
+  let partsOfCards = document.querySelectorAll(`#id_${id} .part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
 
@@ -135,11 +135,11 @@ let popupInit = (id, cats) => {
       popup_element = document.querySelector('#edit-modal');
       showForm(id,catsInfo);
       break
-    case partsOfCards[id*2-2]:
-    case partsOfCards[id*2-1]: {
+    case partsOfCards[0]: 
+    case partsOfCards[1]: 
       popup_element = document.querySelector('#show-modal-container')
-      showCatInfo(id,[...catsInfo])
-      } break
+      showCatInfo(id, catsInfo)
+      break
     case addButtonInner:
     case addButton: {
       popup_element = document.querySelector('#edit-modal'); 

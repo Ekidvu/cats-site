@@ -1,36 +1,20 @@
 let cards = document.querySelector('.cards');
-let catsInfo;
+let catsInfo = [...cats];
 
-const setNewCat = (dataNewCat, callback) => {
-    const newCat = {            
-        ...dataNewCat,
-        id: cats.length + 1
-    }
+newInfo.id = catsInfo.length + 1
+catsInfo.push(newInfo)
 
-    let switchNewCatIsNew;
-    cats.forEach((e,i)=> {
-        switchNewCatIsNew = e.name !== newCat.name && e.age !== newCat.age && e.description !== newCat.description ? true : false
-    })
-    if (switchNewCatIsNew === true) { cats.push(newCat) }
-    
-    callback(newCat)  
-}
+showAllCats(catsInfo)
 
-setNewCat(newInfo, (cat) => {
-    catsInfo = [...cats];
-})
-
-showAllCats(cats)
-
-function showAllCats(cats) {
+function showAllCats(catsInfo) {
     document.querySelector('.cards').innerHTML = "";
 
-    console.log(cats);
-    cats.forEach(cat => showCat(cat, cats))
+    console.log(catsInfo);
+    catsInfo.forEach(cat => showCat(cat, catsInfo))
 }
 
 
-function showCat(cat, cats) {
+function showCat(cat, catsInfo) {
     const checkAge = (num) => {
         return cat.age.toString().endsWith(num);
     }
@@ -57,7 +41,7 @@ function showCat(cat, cats) {
         newCatNameDiv.innerText = `${cat.name}, ${cat.age} год`;
     } else { newCatNameDiv.innerText = `${cat.name}, ${cat.age} года`; }    
     newCatDiv.style.background = `no-repeat center/cover url(${cat.img_link})`;
-    newCatDiv.setAttribute('id', `${cat.id}`);
+    newCatDiv.setAttribute('id', `id_${cat.id}`);
 
     let btnEdit = document.createElement('button');
     let btnEditIcon = document.createElement('i');
@@ -65,9 +49,9 @@ function showCat(cat, cats) {
     btnEditDiv.classList.add('edit_btn_div',);
     btnEdit.classList.add("btn", "editBtn");
     btnEditIcon.className = "fa-solid fa-pen";
-    btnEdit.setAttribute('onclick', `popupInit(${cat.id},cats)`);
-    newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), cats`);
-    newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},cats)`);
+    btnEdit.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
+    newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), catsInfo`);
+    newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
     btnEditIcon.setAttribute('data-action', "edit");
    
     newCatDiv.addEventListener('mouseover', () => { 
@@ -76,13 +60,6 @@ function showCat(cat, cats) {
     newCatDiv.addEventListener('mouseleave', () => { 
         btnEdit.removeAttribute('id', "btnChangeOnCardHover");
     });
-    // showForm
-    // showCatInfo
-
-    // console.log(document.querySelectorAll('card:not(:first-child)'));
-    // let funcForShowCat = document.querySelectorAll('.cards .part_of_card:not(:nth-child(2))');
-
-    // console.log(funcForShowCat);
 
     btnEdit.appendChild(btnEditIcon);
     btnEditDiv.appendChild(btnEdit)

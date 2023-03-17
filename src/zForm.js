@@ -10,6 +10,8 @@ let newFormInfo = {};
 let formInfo;
 let funcForShowCat
 let updatedCats
+let img = document.querySelector('form img');
+
 // let partsOfCards = document.querySelectorAll(`.part_of_card:not(:nth-child(2))`);
 // let addForm = document.forms.add;
 
@@ -24,9 +26,14 @@ let refresh = () => {
 }
 refresh()
 
+/* <label for="upd__img">Новое изображение</label>
+<input id="upd__img" name="url" type="url" placeholder="Ссылка на изображение"> */
+
 const showForm = (id,cats) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
-    let img = document.querySelector('form img');
+    // let img = document.querySelector('form img');
+    let cardElem = document.querySelector(`#id_${id}`);
+    console.log(cardElem)
 
     if (id === false) {
     for (let i=0;i<infoPlaceholders.length;i++) {
@@ -47,11 +54,15 @@ const showForm = (id,cats) => {
     }} else {
     formInfo = {...catsInfo[id-1]};
     console.log(formInfo);
+    console.log(catsInfo);
     for (let i=0;i<infoPlaceholders.length;i++) {
         if (infoPlaceholders[i].type === "checkbox") {
-            infoPlaceholders[i].checked = formInfo["favourite"];
+            infoPlaceholders[i].checked = formInfo["favourite"] === true ? "on" : "off";
         } else if (infoPlaceholders[i].type === "url") {
-            img.src = formInfo.img_link; 
+            img.src = formInfo.img_link;
+            // formInfo.img_link = '';
+            console.log(formInfo.img_link);
+            console.log(cardElem.style.background);
         } else {
             for (let key in formInfo) { 
                 if (key === infoPlaceholders[i].name) {
@@ -63,23 +74,34 @@ const showForm = (id,cats) => {
 
     document.querySelector('#btn__upd').addEventListener('click', () => {
         document.querySelector('#edit-modal').classList.remove("active");
+        // editForm.reset();
         refresh()
     });
 };
 
 catSubmitFormInfo = (event) => {
     event.preventDefault();
-
+    
     formSub.forEach(e => {
         if(e.name === "favourite") {
-            newFormInfo["favourite"] = e.value === 'on' ? true : false;
+            newFormInfo["favourite"] = e.value;
+            console.log(e.value);
+            console.log(document.querySelector('#upd__favour').attributes.specified); 
+            console.log(document.querySelector('#upd__favour').value); 
+            // === 'on' ? true : false;
         } else if (e.name === "url" && e.value) {
             newFormInfo['img_link'] = e.value;
+            document.querySelector('#upd__img').value = "";
+            // img.src = '';
+            console.log(newFormInfo['img_link']);
         } else if (e.value) {
             newFormInfo[e.name] = e.value; 
         }
     })
-    console.log(newFormInfo);    
+    // editForm.reset();
+    // console.log(formSub);    
+    // console.log(document.querySelector('#upd__img').value);    
+    // console.log(document.querySelector('#show__img img').src);    
 
     if (document.querySelector('#edit').previousElementSibling.innerText === "Добавить красавца!") {
         let newCat = {            
@@ -89,31 +111,25 @@ catSubmitFormInfo = (event) => {
         catsInfo.push(newCat)
     } else {
         newData = {...formInfo, ...newFormInfo};
-        setNewCat(newData, (cat) => {
-        // catsInfo = [...cats];
         catsInfo = catsInfo.map(function(cat) {
             if (cat.id === newData.id) {
                 updatedCats = {...cat, ...newData};
                 return updatedCats;
             }
-        console.log(updatedCats); 
+        // console.log(updatedCats); 
         return cat; 
         })  
-        })
     }
-    console.log(catsInfo);
-
-
-// newInfo newData
-
-    console.log(catsInfo);
-    showAllCats(catsInfo)
+    // console.log(catsInfo);
     refresh()
+
+
+    showAllCats(catsInfo)    
 } 
 
 function showCatInfo(id,cats) {
 
-    console.log(catsInfo);
+    // console.log(catsInfo);
     let currentCat = {...catsInfo[id-1]};
     
     let imgDiv = document.querySelector('#show__img__label img');
