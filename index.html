@@ -16,7 +16,7 @@
         <!-- <div class="header__controls">
             <i class="fa-solid fa-magnifying-glass" id="header__glass"></i>
         </div> -->
-        <button class="btn" id="add" onclick="popupInit(cats.length,cats)"><i class="fa-solid fa-plus" id="header__plus"></i></button>      
+        <button class="btn" id="add" onclick="popupInit(false,catsInfo)"><i class="fa-solid fa-plus" id="header__plus"></i></button>      
     </header>
     <main class="main container">
         <section class="cards">
@@ -50,6 +50,10 @@
             <h1>Cмотр красавца</h1>
             <form action="" id="edit">
                 <div class="form__info" id="form__name__div">
+                    <div class="rate_stars_edit" id="rate_stars_div_edit">
+                        <!-- <i class="fa-regular fa-star"></i> -->
+                        <!-- <i class="fa-solid fa-star"></i> -->
+                    </div>
                     <label for="upd__name">Имя питомца</label>
                     <input id="upd__name" name="name" placeholder="Введите имечко" type="text" >
                 </div>

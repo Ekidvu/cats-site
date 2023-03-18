@@ -11,40 +11,22 @@ let formInfo;
 let funcForShowCat
 let updatedCats
 let img = document.querySelector('form img');
+let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 
-
-
-// let partsOfCards = document.querySelectorAll(`.part_of_card:not(:nth-child(2))`);
-// let addForm = document.forms.add;
-
-// let refresh = () => { 
-//     modals.forEach(m=> {
-//         let close = m.querySelector('.modal-close');
-//         close.addEventListener('click', () => {
-//             m.classList.remove('active');
-//         })
-//     });
-//     editForm.reset();
-// }
-// refresh()
-
-// let close = m.querySelector('.modal-close');
-// close.addEventListener('click', () => {
-//     m.classList.remove('active');
-// })
 
 const showForm = (id,catsInfo) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
-    // let img = document.querySelector('form img');
     let cardElem = document.querySelector(`#id_${id}`);
+    starsDivInEditModal.innerHTML = '';
+    img.src = '';
 
     if (id === false) {
     for (let i=0;i<infoPlaceholders.length;i++) {
     if (infoPlaceholders[i].type === "checkbox") {
-        infoPlaceholders[i].checked = false;
+        // infoPlaceholders[i].checked = false;
     } else if (infoPlaceholders[i].type === "url") {
         infoPlaceholders[i].placeholder = "Ссылка на изображение";
-        img.src = '';
+        // img.src = '';
     } else if (infoPlaceholders[i].name === "name") {
         infoPlaceholders[i].placeholder = "Введите имечко";
     } else if (infoPlaceholders[i].name === "age") {
@@ -53,19 +35,15 @@ const showForm = (id,catsInfo) => {
         infoPlaceholders[i].placeholder = "Выбрать няшность";
     } else if (infoPlaceholders[i].name === "description") {
         infoPlaceholders[i].placeholder = "Опишите красавца";
-    };
-    }} else {
+    }; }
+    } else {
     formInfo = {...catsInfo[id-1]};
-    console.log(formInfo);
-    console.log(catsInfo);
     for (let i=0;i<infoPlaceholders.length;i++) {
         if (infoPlaceholders[i].type === "checkbox") {
-            infoPlaceholders[i].checked = formInfo["favourite"];
+            console.log(infoPlaceholders[i].checked);
+            infoPlaceholders[i].checked = formInfo["favourite"];            
         } else if (infoPlaceholders[i].type === "url") {
             img.src = formInfo.img_link;
-            // formInfo.img_link = '';
-            // console.log(formInfo.img_link);
-            // console.log(cardElem.style.background);
         } else if (infoPlaceholders[i].id === "card_id") {
             infoPlaceholders[i].placeholder = `${id}`;
         } else {
@@ -75,17 +53,26 @@ const showForm = (id,catsInfo) => {
                 }
             }}
         }
+    for (let i=0; i< (10-formInfo.rate); i++) { 
+        starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
+    for (let i=0; i<formInfo.rate; i++) {
+        starsDivInEditModal.innerHTML += '<i class="fa-solid fa-star"></i>';
     }
+    }
+
+   
     // console.log(infoPlaceholders);   
-    console.log(editForm);
-    document.querySelector('#btn__upd').addEventListener('click', (event) => {
+    // console.log(editForm);
+    document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
         catSubmitFormInfo(event);
         document.querySelector('#edit-modal').classList.remove("active");
-        editForm.reset();
+        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
     });
-    document.querySelector('#edit-modal .modal-close').addEventListener('click', () => {
+    document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
         document.querySelector('#edit-modal').classList.remove("active");
+        document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
     })
+    editForm.reset()
 };
 // console.log(document.querySelector(`#id_4`).style.backgroundImage.slice(4,-1));
 
@@ -100,11 +87,10 @@ catSubmitFormInfo = (event) => {
             // newFormInfo['img_link'] === e.value;
             newFormInfo['img_link'] = !!e.value ? e.value : img.src;
             //  document.querySelector(`#id_${id}`).style.backgroundImage.slice(4,-1);
-            console.log(e.value);
-            console.log(e.name);
-            console.log(newFormInfo);
-
-            console.log(newFormInfo['img_link']);
+            // console.log(e.value);
+            // console.log(e.name);
+            // console.log(newFormInfo);
+            // console.log(newFormInfo['img_link']);
         } else if (e.value && e.name !== "url") {
             newFormInfo[e.name] = e.value;
         }
@@ -116,7 +102,8 @@ catSubmitFormInfo = (event) => {
     // console.log(document.querySelector('#show__img img').src);    
     console.log(catsInfo);
     if (document.querySelector('#edit').previousElementSibling.innerText === "Добавить красавца!") {
-        let newCat = {            
+        let newCat = {};
+        newCat = {            
             ...newFormInfo,
             id: catsInfo.length + 1
         } 
@@ -141,17 +128,24 @@ catSubmitFormInfo = (event) => {
 } 
 
 function showCatInfo(id,cats) {
-
-    let currentCat = {...catsInfo[id-1]};
-    
+    let currentCat = {...catsInfo[id-1]};   
     let imgDiv = document.querySelector('#show__img__label img');
     imgDiv.src = currentCat.img_link;
     let showCatDesc = document.querySelector('#description');
     showCatDesc.firstChild.innerText = `${currentCat.name}, ${currentCat.age}`;
+
+    document.querySelector('#stars_block_info').innerHTML = '';
     showCatDesc.lastChild.innerText = `${currentCat.description}`;
-    document.querySelector('#show-modal-container .modal-close').addEventListener('click', () => {
+    document.querySelector('#show-modal-container .modal-close').addEventListener('click', function closeShowModal() {
         document.querySelector('#show-modal-container').classList.remove('active');
-    })     
+        document.querySelector('#show-modal-container .modal-close').addEventListener('click', closeShowModal)
+    })
+    for (let i=0; i < (10-currentCat.rate); i++) { 
+        document.querySelector('#stars_block_info').innerHTML += '<i class="fa-regular fa-star"></i>';
+    }
+    for (let i=0; i<currentCat.rate;i++) {
+        document.querySelector('#stars_block_info').innerHTML += '<i class="fa-solid fa-star"></i>';
+    }         
 }
 
 // const setNewCat = (dataNewCat, callback) => {

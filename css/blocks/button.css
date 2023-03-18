@@ -20,6 +20,10 @@ header .btn {
     font-size: 30px;    
 }
 
+.edit_btn_div {
+    height: 50px;
+}
+
 /* #add {
     padding-top: 3px;
     padding-bottom: 0px;    

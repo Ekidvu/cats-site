@@ -124,10 +124,11 @@ let popupInit = (id, catsInfo) => {
   let partsOfCards = document.querySelectorAll(`#id_${id} .part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
+  // editBtnOnCard[id-1].firstChild:
 
   switch (event.target) {
     case editBtnOnCard[id-1]:
-    case editBtnOnCard[id-1].firstChild:
+    case document.querySelectorAll('.editBtn .fa-pen'):
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
       showForm(id,catsInfo);
@@ -138,9 +139,9 @@ let popupInit = (id, catsInfo) => {
       showCatInfo(id, catsInfo)
       break
     case addButtonInner:
-    case addButton: {
+    case addButton: 
       popup_element = document.querySelector('#edit-modal'); 
-      document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!"; }
+      document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
       showForm(false);
       break
     // case authBtn:
@@ -177,12 +178,20 @@ document.body.append(divAuth);
 const popupInitAuth = () => {
   let modalAuthCloseButton = document.querySelector('.modalAuth');
   modalAuthCloseButton.classList.add('active');
-  document.querySelector('.closeBtnAuthor').addEventListener('click', () => {
+  document.querySelector('.closeBtnAuthor').addEventListener('click', function closeAuthMonkey() {
     modalAuthCloseButton.classList.remove('active');
     document.addEventListener('keyup', closeByEsc);
+    document.querySelector('.closeBtnAuthor').addEventListener('click', closeAuthMonkey)
   });
 }
 
 
 // class="fa-regular fa-star"
 // class="fa-solid fa-star"
+/* <div class="form__info" id="form__name__div">
+  <div class="rate_stars_edit"></div>
+  <label for="upd__name">Имя питомца</label>
+  <input id="upd__name" name="name" placeholder="Дуся" type="text">
+</div> */
+// /* <i class="fa-regular fa-star"></i> */
+/* <i class="fa-solid fa-star"></i> */

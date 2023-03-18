@@ -155,4 +155,11 @@ input:focus, textarea:focus {
 /* --- CatShowForm --- */
 
 
-
+#stars_block_info {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: end;
+    font-size: 40px;
+    padding-left: 20px;
+}
