@@ -124,7 +124,6 @@ let popupInit = (id, catsInfo) => {
   let partsOfCards = document.querySelectorAll(`#id_${id} .part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
-  // editBtnOnCard[id-1].firstChild:
 
   switch (event.target) {
     case editBtnOnCard[id-1]:
@@ -134,7 +133,7 @@ let popupInit = (id, catsInfo) => {
       showForm(id,catsInfo);
       break
     case partsOfCards[0]: 
-    case partsOfCards[1]: 
+    case partsOfCards[1]:  
       popup_element = document.querySelector('#show-modal-container')
       showCatInfo(id, catsInfo)
       break
@@ -144,9 +143,17 @@ let popupInit = (id, catsInfo) => {
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
       showForm(false);
       break
-    // case authBtn:
-    //   popup_element = document.querySelector('.modalAuth')
-    //   break      
+    case document.querySelectorAll('.isLiked')[id-1]:
+    case document.querySelectorAll('.isLiked i')[id-1]:
+      popup_element = document.querySelectorAll('.isLiked .fa-heart')[id-1];
+      popup_element.classList.toggle('fa-solid')  
+      popup_element.classList.toggle('fa-regular')
+      if (popup_element.classList.contains('fa-solid')) {
+        catsInfo[id-1].favourite = true;
+      } else if (popup_element.classList.contains('fa-regular')) {
+        catsInfo[id-1].favourite = false;
+      }
+      console.log(catsInfo[id-1]);
     default:
       break
   }
@@ -186,12 +193,8 @@ const popupInitAuth = () => {
 }
 
 
-// class="fa-regular fa-star"
-// class="fa-solid fa-star"
-/* <div class="form__info" id="form__name__div">
-  <div class="rate_stars_edit"></div>
-  <label for="upd__name">Имя питомца</label>
-  <input id="upd__name" name="name" placeholder="Дуся" type="text">
-</div> */
-// /* <i class="fa-regular fa-star"></i> */
-/* <i class="fa-solid fa-star"></i> */
+// https://yt3.ggpht.com/ytc/AAUvwnjTDmGOkG6BGDLELBugMWi7mdXa18tLzvVSMmt-=s900-c-k-c0x00ffffff-no-rj
+// https://coolsen.ru/wp-content/uploads/2021/11/001-20211109_131908.jpg
+// https://avatars.dzeninfra.ru/get-zen_doc/4055701/pub_61180c34cdef433a85fc6bd8_613e32e588d59c30fddf1e71/scale_1200
+// 
+// 

@@ -45,14 +45,23 @@ function showCat(cat, catsInfo) {
     let btnEdit = document.createElement('button');
     let btnEditIcon = document.createElement('i');
     let btnEditDiv = document.createElement('div');
+
     btnEditDiv.classList.add('edit_btn_div',);
     btnEdit.classList.add("btn", "editBtn");
     btnEditIcon.className = "fa-solid fa-pen";
+    newCatRateDiv.innerHTML = '<div class="isLiked"></div><div class="stars_div_in_part_of_card" "onclick"=`setLike(${cat},this)></div>'; 
     for (let i=0; i<cat.rate; i++) {
-        newCatRateDiv.innerHTML += '<i class="fa-solid fa-star"></i>';
+        newCatRateDiv.querySelector(".stars_div_in_part_of_card").innerHTML += '<i class="fa-solid fa-star"></i>';
     }
     
-
+    if (cat.favourite === false) {
+        newCatRateDiv.querySelector('.isLiked').innerHTML = '<i class="fa-regular fa-heart cat-like"`></i>'
+    } else {
+        newCatRateDiv.querySelector('.isLiked').innerHTML = '<i class="fa-solid fa-heart cat-like"`></i>'
+    }
+    // console.log(cat.favourite);
+    // let isLikedArea = document.querySelectorAll(`.rate_div:not(.isLiked)`)
+    // console.log(isLikedArea);
     btnEdit.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
     newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), catsInfo`);
     newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
