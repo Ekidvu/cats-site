@@ -72,7 +72,7 @@ const showForm = (id,catsInfo) => {
         document.querySelector('#edit-modal').classList.remove("active");
         document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
     })
-    editForm.reset()
+    // editForm.reset()
 };
 // console.log(document.querySelector(`#id_4`).style.backgroundImage.slice(4,-1));
 
@@ -123,7 +123,7 @@ catSubmitFormInfo = (event) => {
     // console.log(catsInfo);
     // refresh()
 
-
+    editForm.reset()
     showAllCats(catsInfo)    
 } 
 

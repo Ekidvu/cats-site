@@ -128,7 +128,7 @@ let popupInit = (id, catsInfo) => {
 
   switch (event.target) {
     case editBtnOnCard[id-1]:
-    case document.querySelectorAll('.editBtn .fa-pen'):
+    case document.querySelectorAll('.editBtn .fa-pen')[id-1]:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
       showForm(id,catsInfo);
