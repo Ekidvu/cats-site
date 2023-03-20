@@ -30,9 +30,6 @@
 .card:hover {
     border-color: rgba(197, 74, 74, 0.932);
     border-width: 4px;
-    /* display: inline-block; */
-    /* background-size: contain; */
-    /* position: overflow; */
 }
 
 
@@ -61,7 +58,6 @@
 .isLiked {
     font-size: 29px;
     margin: 0 0 6px 3px;
-    /* padding: 6px 3px;px; */
 }
 
 #btnChangeOnCardHover {

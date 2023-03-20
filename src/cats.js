@@ -194,6 +194,7 @@ const popupInitAuth = () => {
 
 
 // https://yt3.ggpht.com/ytc/AAUvwnjTDmGOkG6BGDLELBugMWi7mdXa18tLzvVSMmt-=s900-c-k-c0x00ffffff-no-rj
+// https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg
 // https://coolsen.ru/wp-content/uploads/2021/11/001-20211109_131908.jpg
 // https://avatars.dzeninfra.ru/get-zen_doc/4055701/pub_61180c34cdef433a85fc6bd8_613e32e588d59c30fddf1e71/scale_1200
 // 

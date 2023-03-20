@@ -59,9 +59,7 @@ function showCat(cat, catsInfo) {
     } else {
         newCatRateDiv.querySelector('.isLiked').innerHTML = '<i class="fa-solid fa-heart cat-like"`></i>'
     }
-    // console.log(cat.favourite);
-    // let isLikedArea = document.querySelectorAll(`.rate_div:not(.isLiked)`)
-    // console.log(isLikedArea);
+
     btnEdit.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
     newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), catsInfo`);
     newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
