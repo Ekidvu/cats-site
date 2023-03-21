@@ -1,6 +1,6 @@
 .card {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    /* grid-template-columns: 3fr 1fr; */
     min-height: 200px;
     border-style: solid;
     border-color: rgba(128, 32, 32, 0.774);
@@ -24,8 +24,6 @@
 .part_of_card .fa-star {
     margin: 0 3px 4px 0;
 }
-
-
 
 .card:hover {
     border-color: rgba(197, 74, 74, 0.932);

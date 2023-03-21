@@ -22,7 +22,6 @@
     /* inline-size: auto; */
 }
 
-
 #description {
     grid-column-start: span 2;
     display: grid;
