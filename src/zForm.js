@@ -131,3 +131,4 @@ function showCatInfo(id,cats) {
         document.querySelector('#description div').innerHTML = '<i class="fa-regular fa-heart overview_cat_like"></i>';
     }
 }
+
