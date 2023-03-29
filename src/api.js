@@ -77,4 +77,4 @@ api.getAllApiCats()
   })
 
 
-  api.updateApiCatById(2, {"name": "Pater Catnips"})
+// api.updateApiCatById(2, {"name": "Pater Catnips"})

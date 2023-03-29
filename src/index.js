@@ -3,10 +3,16 @@ let catsInfo = [...cats];
 newInfo.id = catsInfo.length + 1
 catsInfo.push(newInfo)
 
+// const newElement = new Card(cats[0], "#card-template");
+// const cardsContainer = document.querySelector('.cards__container')
+// console.log(newElement.getElement());
+// cards.append(newElement.getElement())
+
 showAllCats(catsInfo)
 
 function showAllCats(catsInfo) {
     document.querySelector('.cards').innerHTML = "";
+    // cardsContainer.append(newElement.getElement())
 
     console.log(catsInfo);
     catsInfo.forEach(cat => showCat(cat, catsInfo))
@@ -79,6 +85,9 @@ function showCat(cat, catsInfo) {
 }
 
 
+catsInfo.forEach(catData => {
+    const newElement = new Card(catData, "#card-template");
+    cardsContainer.append(newElement.getElement())
+})
 
-
-
+// console.log(cardsContainer);

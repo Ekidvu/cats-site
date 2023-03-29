@@ -10,3 +10,15 @@
 .card.scale {
     height: 100px;
 }
+
+
+.cards__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); 
+    gap: 25px;
+    margin: 20px auto;
+}
+.section__line  {
+    width: 100%;
+    border: 1px solid black;
+}
