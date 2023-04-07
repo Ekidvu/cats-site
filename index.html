@@ -16,7 +16,10 @@
         <!-- <div class="header__controls">
             <i class="fa-solid fa-magnifying-glass" id="header__glass"></i>
         </div> -->
-        <button class="btn" id="add" onclick="popupInit(false,catsInfo)"><i class="fa-solid fa-plus" id="header__plus"></i></button>      
+        <div class="headerButtons">
+            <button class="btn" id="addNewCat"><i class="fa-solid fa-plus" id="addNewCat__plus"></i></button> 
+            <button class="btn" id="add" onclick="popupInit(false,catsInfo, event)"><i class="fa-solid fa-plus" id="header__plus"></i></button>              
+        </div>     
     </header>
     <main class="main container">
         <section class="cards__container">
@@ -112,12 +115,42 @@
             </button>
         </div>
     </template>
+    <!-- -------------------- -->
+    <div class="popup popup-add">
+        <div class="popup__container">
+            <button class="popup__close btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <h2>Добавить питомца</h2>
+            <form class="form___image" id="popup-form">
+                <div class="form___image"></div>
+                <input type="number" class="form___input" name="id" min="1" required placeholder="id">
+                <input type="number" class="form___input" name="age" placeholder="Возраст">
+                <input type="text" class="form___input" name="name" required placeholder="Имя">
+                <input type="number" class="form___input" name="rate" placeholder="Рейтинг (0-10)">
+                <textarea name="description" id="" cols="30" rows="3" class="form___input form___textarea" placeholder="Описание"></textarea>
+                <label class="form___checkbox-wrap">
+                    <input type="checkbox" class="form___checkbox" name="favourite" placeholder="">
+                    <span class="form___label">Любимчик</span>
+                    <span class="form__fake-checkbox"><i class="fa-regular fa-circle-check"></i></span>
+                </label>
+                <input type="url" class="form___input" name="img_link" placeholder="Ссылка на фото">
+                <button type="submit" class="form___btn btn">Добавить котика</button>
+            </form>
+        </div>
+    </div>
+    <div class="popup popup-cat-image">
+        <div class="popup__container">
+            <button class="popup__close btn popup__close_external"><i class="fa-solid fa-xmark"></i></button>
+            <img src="#" alt="" class="popup__image">
+        </div>
+    </div>
 
+    <!-- -------------------- -->
     <script src="./src/cats.js" defer></script>
     <script src="./src/api.js" defer></script>
     <script src="./src/card.js" defer></script>
     <script src="./src/index.js" defer></script>
     <script src="./src/zForm.js" defer></script>
     <script src="./src/popup.js" defer></script>
+    <script src="./src/popup-img.js" defer></script>
 </body>
 </html>

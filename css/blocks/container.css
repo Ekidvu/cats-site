@@ -3,23 +3,29 @@
 }
 
 .modal {
-    display: none;
+    /* display: none; */
+    display: flex;
     position: fixed;
     z-index: 10;
     inset: 0;
-    /* top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0; */
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(1px);
-    background-color: rgba(207, 207, 224, 0.637);
+    visibility: hidden;
+    opacity: 0;
+    transition: linear 0.2s, linear 0.2s, linear 0.2s 0.5s;
+    transition-property: opacity, background-color, visibility;
+    /* background-color: rgba(207, 207, 224, 0.637); */
 }
 
 .modal.active {
-    display: flex;
-    /* min-width: max-content; */
+    /* display: flex; */
+    inset: 0;
+    background-color: rgba(207, 207, 224, 0.637);
+    opacity: 1;
+    visibility: visible;
+    transition: linear 0.2s, linear 0.2s;
+    transition-property: opacity, background-color;
 }
 
 .modal-container {

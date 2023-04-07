@@ -3,21 +3,28 @@ let catsInfo = [...cats];
 newInfo.id = catsInfo.length + 1
 catsInfo.push(newInfo)
 
-// const newElement = new Card(cats[0], "#card-template");
-// const cardsContainer = document.querySelector('.cards__container')
-// console.log(newElement.getElement());
-// cards.append(newElement.getElement())
-
 showAllCats(catsInfo)
+
+// function showFirstSectionCats(catsArray, indexArray) {
+//     indexArray.forEach(card => {
+//         cardsContainer.removeChild(cardsContainer.children[card])
+//     })
+
+//     catsArray.forEach(catData => {
+//         const newElement = new Card(catData, "#card-template");
+//         cardsContainer.prepend(newElement.getElement())
+//     })
+// }
+
+
 
 function showAllCats(catsInfo) {
     document.querySelector('.cards').innerHTML = "";
-    // cardsContainer.append(newElement.getElement())
 
     console.log(catsInfo);
     catsInfo.forEach(cat => showCat(cat, catsInfo))
-}
 
+}
 
 function showCat(cat, catsInfo) {
     const checkAge = (num) => {
@@ -66,9 +73,9 @@ function showCat(cat, catsInfo) {
         newCatRateDiv.querySelector('.isLiked').innerHTML = '<i class="fa-solid fa-heart cat-like"`></i>'
     }
 
-    btnEdit.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
-    newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}), catsInfo`);
-    newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},catsInfo)`);
+    btnEdit.setAttribute('onclick', `popupInit(${cat.id},catsInfo, event)`);
+    newCatNameDiv.setAttribute('onclick', `popupInit(${cat.id}, catsInfo, event)`);
+    newCatRateDiv.setAttribute('onclick', `popupInit(${cat.id},catsInfo, event)`);
     btnEditIcon.setAttribute('data-action', "edit");
    
     newCatDiv.addEventListener('mouseover', () => { 
@@ -85,9 +92,20 @@ function showCat(cat, catsInfo) {
 }
 
 
-catsInfo.forEach(catData => {
-    const newElement = new Card(catData, "#card-template");
-    cardsContainer.append(newElement.getElement())
-})
+// catsInfo.forEach(catData => {
+//     const newElement = new Card(catData, "#card-template");
+//     cardsContainer.append(newElement.getElement())
+// })
+// [catsInfo[9], catsInfo[10]].forEach(catData => {
+//     const newElement = new Card(catData, "#card-template");
+//     cardsContainer.append(newElement.getElement())
+// })
+
 
 // console.log(cardsContainer);
+
+
+[catsInfo[9], catsInfo[10]].forEach(catData => {
+    const newElement = new Card(catData, "#card-template",handleClickCatImage);
+    cardsContainer.append(newElement.getElement())
+})

@@ -116,7 +116,8 @@ input:focus, textarea:focus {
     grid-column-end: span 3;
 }
 
-.form__info .form-span-2 {
+.form__info.form-span-2 {
+    max-height: 100%;
     display: inline-block;
 }
 
@@ -124,6 +125,17 @@ input:focus, textarea:focus {
     display: flex;
     flex-direction: column;
     justify-content: end;
+}
+
+.form__info #show__img {
+    display: block;
+    height: 100%;
+}
+#show__img img{
+    max-width: 100%;
+    max-height: 50vh;
+    /* max-height: 100%; */
+    /* display: block; */
 }
 
 [for="upd__name"] {
@@ -135,14 +147,7 @@ input:focus, textarea:focus {
     font-size: 18px;
 }
 
-.form__info #show__img {
-    display: block;
-    height: 90%;
-}
-#show__img img{
-    max-width: 100%;
-    /* display: block; */
-}
+
 
 
 

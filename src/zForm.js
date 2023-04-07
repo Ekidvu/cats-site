@@ -9,11 +9,12 @@ let img = document.querySelector('form img');
 let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 
 
-const showForm = (id,catsInfo) => {
+const showForm = (id,catsInfo,evt) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
-    let cardElem = document.querySelector(`#id_${id}`);
+    // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
     img.src = '';
+    // console.log(evt);
 
     if (id === false) {
     for (let i=0;i<infoPlaceholders.length;i++) {
@@ -55,6 +56,8 @@ const showForm = (id,catsInfo) => {
     }
     }
 
+    // console.log(evt.target);
+
     document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
         catSubmitFormInfo(event);
         document.querySelector('#edit-modal').classList.remove("active");
@@ -63,6 +66,7 @@ const showForm = (id,catsInfo) => {
     document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
         document.querySelector('#edit-modal').classList.remove("active");
         document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
+        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
     })
 };
 
@@ -100,7 +104,7 @@ catSubmitFormInfo = (event) => {
         return cat; 
         })  
     }
-
+    renewKotuhIPerchik(id);
     editForm.reset()
     showAllCats(catsInfo)    
 } 

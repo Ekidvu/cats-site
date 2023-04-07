@@ -118,18 +118,20 @@ let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
 let authBtn = document.querySelector('#author');
 
-let popupInit = (id, catsInfo) => {
+let popupInit = (id, catsInfo, evt) => {
   let popup_element; 
   let editBtnOnCard = document.querySelectorAll('.editBtn');
   let partsOfCards = document.querySelectorAll(`#id_${id} .part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
 
-  switch (event.target) {
+  // console.log(evt.target.closest('.isLiked'));
+  switch (evt.target) {
     case editBtnOnCard[id-1]:
     case document.querySelectorAll('.editBtn .fa-pen')[id-1]:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
+      // popup_element.removeEventListener('click', closeByClosest)
       showForm(id,catsInfo);
       break
     case partsOfCards[0]: 
@@ -139,9 +141,10 @@ let popupInit = (id, catsInfo) => {
       break
     case addButtonInner:
     case addButton: 
-      popup_element = document.querySelector('#edit-modal'); 
+      popup_element = document.querySelector('#edit-modal');
+      // popup_element.removeEventListener('click', closeByClosest) 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
-      showForm(false);
+      showForm(false, catsInfo, evt);
       break
     case document.querySelectorAll('.isLiked')[id-1]:
     case document.querySelectorAll('.isLiked i')[id-1]:
@@ -153,22 +156,61 @@ let popupInit = (id, catsInfo) => {
       } else if (popup_element.classList.contains('fa-regular')) {
         catsInfo[id-1].favourite = false;
       }
-      console.log(catsInfo[id-1]);
+      console.log(catsInfo[id-1].id);
+      renewKotuhIPerchik(id)
+      break
     default:
       break
   }
+    
+  console.log(catsInfo[id-1]);
   popup_element.classList.add('active');
+  popup_element.addEventListener('click', function closeByClosest(evt) {
+    if(evt.target.classList.contains('modal')) {
+      popup_element.classList.remove('active')
+      document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+    }
+    // popup_element.removeEventListener('click', closeByClosest)
+  })
   document.addEventListener('keyup', closeByEsc);
 }
 
-function closeByEsc() {  
+function closeByEsc(evt) {  
   let close = document.querySelectorAll('.modal-close');
-  if (event.key === "Escape") {
+  if (evt.key === "Escape") {
     close.forEach(e => {
       if (e.parentElement.parentElement.hasAttribute('class',   'active')) { e.parentElement.parentElement.classList.remove('active') }
     })
   }
   document.removeEventListener('keyup', closeByEsc);
+  document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+}
+
+function renewKotuhIPerchik(id) {
+  if (catsInfo[id-1].id === 10 || catsInfo[id-1].id === 11) {
+    switch (catsInfo[id-1].id){
+      case 10:          
+        renewKotuh(id);
+        break
+      case 11:
+        renewPerchik(id);
+        break
+      default:
+        break
+    }
+  }
+}
+
+function renewKotuh(id) {
+  cardsContainer.removeChild(cardsContainer.children[cardsContainer.children.length-2]);
+  const newElementKotuh = new Card(catsInfo[id-1], "#card-template", handleClickCatImage);
+  cardsContainer.insertBefore(newElementKotuh.getElement(), cardsContainer.lastElementChild);
+}
+
+function renewPerchik(id) {
+  cardsContainer.removeChild(cardsContainer.lastElementChild);
+  const newElementPerchik = new Card(catsInfo[id-1], "#card-template", handleClickCatImage);
+  cardsContainer.append(newElementPerchik.getElement());
 }
 
 divAuthCloseBtn.classList.add('modal-close', 'btn', 'closeBtnAuthor');

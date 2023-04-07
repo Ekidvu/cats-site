@@ -1,38 +1,21 @@
-// let catsInfo;
 
-
-// const setNewCat = (dataNewCat, callback) => {
-//     const newCat = {            
-//         ...dataNewCat,
-//         id: cats.length + 1
-//     }
-
-
-//------Template--------//
-
-
-// const template = document.querySelector('#card-template');
-// const newCatElement = template.content.querySelector('.card');
-
-// cards.append(newCatElement.cloneNode(true))
-// cards.prepend(newCatElement.cloneNode(true))
-
-// const newElement = new Card(cats[0], "#card-template");
 const cardsContainer = document.querySelector('.cards__container')
 
 class Card {
     #data;
     #selectorTemplate;
     #element;
+    #handleClickCatImage
 
     #getTemplate(){
         const template = document.querySelector(this.#selectorTemplate).content.querySelector('.card');
         return template
     }
 
-    constructor(data, selectorTemplate) {
+    constructor(data, selectorTemplate, handleClickCatImage) {
         this.#data = data;
         this.#selectorTemplate = selectorTemplate;
+        this.#handleClickCatImage = handleClickCatImage;
     }
 
     getElement(){
@@ -43,11 +26,14 @@ class Card {
 
         cardTitleElement.textContent = this.#data.name;
         cardImageElement.src = this.#data.img_link;
+        
         if(!this.#data.favourite) {
             cardLikeElement.remove();
         }
         
-        console.log(this.#data);
+        cardImageElement.addEventListener('click', () => {
+            this.#handleClickCatImage(this.#data.img_link)
+        })
 
         //Наполнять карточку
         return this.#element;
@@ -59,3 +45,21 @@ class Card {
 
 
 
+// let catsInfo;
+
+
+// const setNewCat = (dataNewCat, callback) => {
+//     const newCat = {            
+//         ...dataNewCat,
+//         id: cats.length + 1
+//     }
+
+//------Template--------//
+
+// const template = document.querySelector('#card-template');
+// const newCatElement = template.content.querySelector('.card');
+
+// cards.append(newCatElement.cloneNode(true))
+// cards.prepend(newCatElement.cloneNode(true))
+
+// const newElement = new Card(cats[0], "#card-template");
