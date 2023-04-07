@@ -77,7 +77,7 @@ function serializeForm(elements) {
     return formData
 }
 
-function handleFormAddCat(e) {
+function handleFormToCard(e) {
     e.preventDefault();
     const elementsFormCat = [...formCatAdd.elements];
     const formData = serializeForm(elementsFormCat);
@@ -97,7 +97,7 @@ function handleClickCatImage(dataSrc) {
     cardsContainer.append(newElement.getElement())
 })
 
-formCatAdd.addEventListener('submit', handleFormAddCat)
+formCatAdd.addEventListener('submit', handleFormToCard)
 
 popupAdd.setEventListener();
 popupImage.setEventListener();

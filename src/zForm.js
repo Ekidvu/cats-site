@@ -8,8 +8,13 @@ let updatedCats
 let img = document.querySelector('form img');
 let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 
+// function pushFormUpdateButton(event) {
+//     catSubmitFormInfo(event);
+//     document.querySelector('#edit-modal').classList.remove("active");
+//     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+// }
 
-const showForm = (id,catsInfo,evt) => {
+const showForm = (id,catsInfo,event) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
     // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
@@ -56,13 +61,13 @@ const showForm = (id,catsInfo,evt) => {
     }
     }
 
-    // console.log(evt.target);
-
     document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
+        event.preventDefault();
         catSubmitFormInfo(event);
         document.querySelector('#edit-modal').classList.remove("active");
         document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
     });
+    // console.log(evt.target);
     document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
         document.querySelector('#edit-modal').classList.remove("active");
         document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
@@ -103,8 +108,12 @@ catSubmitFormInfo = (event) => {
             }
         return cat; 
         })  
+        renewKotuhIPerchik(id);
     }
-    renewKotuhIPerchik(id);
+
+    formInfo = {};
+    newFormInfo = {};
+    // renewKotuhIPerchik(id);
     editForm.reset()
     showAllCats(catsInfo)    
 } 

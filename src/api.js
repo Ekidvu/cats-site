@@ -45,6 +45,7 @@ class Api {
 
   addNewApiCat(data){
     return fetch(`${this.#baseUrl}/add`, {
+      method: 'POST',
       headers: this.#headers,
       body: JSON.stringify(data)
     })
@@ -56,7 +57,6 @@ class Api {
       method: 'PUT',
       headers: this.#headers,
       body: JSON.stringify(data)
-
     })
       .then(this.#getResponse)
   }

@@ -132,7 +132,7 @@ let popupInit = (id, catsInfo, evt) => {
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = document.querySelector('#edit-modal');
       // popup_element.removeEventListener('click', closeByClosest)
-      showForm(id,catsInfo);
+      showForm(id, catsInfo, evt);
       break
     case partsOfCards[0]: 
     case partsOfCards[1]:  
@@ -165,7 +165,7 @@ let popupInit = (id, catsInfo, evt) => {
     
   console.log(catsInfo[id-1]);
   popup_element.classList.add('active');
-  popup_element.addEventListener('click', function closeByClosest(evt) {
+  popup_element.addEventListener('mousedown', function closeByClosest(evt) {
     if(evt.target.classList.contains('modal')) {
       popup_element.classList.remove('active')
       document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
@@ -237,6 +237,12 @@ const popupInitAuth = () => {
 
 // https://yt3.ggpht.com/ytc/AAUvwnjTDmGOkG6BGDLELBugMWi7mdXa18tLzvVSMmt-=s900-c-k-c0x00ffffff-no-rj
 // https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg
+
+// https://www.fonstola.ru/images/202006/fonstola.ru_394698.jpg
+// https://kot-pes.com/wp-content/uploads/2019/03/post_5b48c1cfca497.jpg
+
+
+
 // https://coolsen.ru/wp-content/uploads/2021/11/001-20211109_131908.jpg
 // https://avatars.dzeninfra.ru/get-zen_doc/4055701/pub_61180c34cdef433a85fc6bd8_613e32e588d59c30fddf1e71/scale_1200
 // 

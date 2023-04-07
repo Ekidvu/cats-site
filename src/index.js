@@ -17,7 +17,6 @@ showAllCats(catsInfo)
 // }
 
 
-
 function showAllCats(catsInfo) {
     document.querySelector('.cards').innerHTML = "";
 
@@ -92,20 +91,10 @@ function showCat(cat, catsInfo) {
 }
 
 
-// catsInfo.forEach(catData => {
-//     const newElement = new Card(catData, "#card-template");
-//     cardsContainer.append(newElement.getElement())
-// })
+
+
+
 // [catsInfo[9], catsInfo[10]].forEach(catData => {
-//     const newElement = new Card(catData, "#card-template");
+//     const newElement = new Card(catData, "#card-template",handleClickCatImage);
 //     cardsContainer.append(newElement.getElement())
 // })
-
-
-// console.log(cardsContainer);
-
-
-[catsInfo[9], catsInfo[10]].forEach(catData => {
-    const newElement = new Card(catData, "#card-template",handleClickCatImage);
-    cardsContainer.append(newElement.getElement())
-})
