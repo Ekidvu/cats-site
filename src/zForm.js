@@ -14,20 +14,29 @@ let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
 // }
 
-const showForm = (id,catsInfo,event) => {
+const showForm = (id, catsInfoVar, evt, clickEl) => {
     let infoPlaceholders = document.querySelectorAll('[type]');
     // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
     img.src = '';
-    // console.log(evt);
+    let check = document.querySelector('.cards__container').contains(evt.target);
 
+    if(check) {
+        catsInfoVar.forEach(el => {
+            if (el.id === id) {
+                formInfo = {...el}
+            }
+        })        
+    } else {
+        formInfo = {...catsInfoVar[id-1]};
+    }
+    
     if (id === false) {
     for (let i=0;i<infoPlaceholders.length;i++) {
     if (infoPlaceholders[i].type === "checkbox") {
         // infoPlaceholders[i].checked = false;
     } else if (infoPlaceholders[i].type === "url") {
         infoPlaceholders[i].placeholder = "Ссылка на изображение";
-        // img.src = '';
     } else if (infoPlaceholders[i].name === "name") {
         infoPlaceholders[i].placeholder = "Введите имечко";
     } else if (infoPlaceholders[i].name === "age") {
@@ -37,8 +46,8 @@ const showForm = (id,catsInfo,event) => {
     } else if (infoPlaceholders[i].name === "description") {
         infoPlaceholders[i].placeholder = "Опишите красавца";
     }; }
-    } else {
-    formInfo = {...catsInfo[id-1]};
+    } else {    
+    console.log(formInfo);
     for (let i=0;i<infoPlaceholders.length;i++) {
         if (infoPlaceholders[i].type === "checkbox") {
             console.log(infoPlaceholders[i].checked);

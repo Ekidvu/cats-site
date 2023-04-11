@@ -1,3 +1,5 @@
+let dataBaseApiCats = [];
+
 class Popup {
     #handleEscapeUp = (evt) => {
         if(evt.key === 'Escape') {
@@ -58,8 +60,6 @@ btnAddCatPopup.addEventListener('click', (e) => {
 
 // console.log(document.querySelector(`.popup`));
 
-
-
 function serializeForm(elements) {
     const formData = {};
 
@@ -82,9 +82,25 @@ function handleFormToCard(e) {
     const elementsFormCat = [...formCatAdd.elements];
     const formData = serializeForm(elementsFormCat);
 
-    const newElement = new Card(formData, "#card-template", handleClickCatImage);
-    cardsContainer.prepend(newElement.getElement())
-
+    const formDataForApiServer = [formData].map(({
+        favourite: favorite,
+        img_link: image,
+        ...rest
+    }) => ({
+        favorite,
+        image,
+        ...rest
+    }))
+    formDataForApiServer.forEach(cat => {
+        api.addNewApiCat(cat)
+          .then(function() {
+            showCardsApiCats([formData])
+          })
+          .catch(function(err){
+            console.log(err);
+          }) 
+    })
+    
     popupAdd.close();
 }
 
@@ -92,9 +108,28 @@ function handleClickCatImage(dataSrc) {
     popupImage.open(dataSrc)
 }
 
-[catsInfo[9], catsInfo[10]].forEach(catData => {
+function showCardsApiCats(arr) {
+    arr.forEach(catData => {
+        const newElement = new Card(catData, "#card-template",handleClickCatImage);
+        cardsContainer.prepend(newElement.getElement())
+        // console.log(catData.id);
+        const openEditApiCard = document.querySelector('.cards__container .card h2')
+        // console.log(openEditApiCard);
+        openEditApiCard.addEventListener('click', function data() {
+            popupInit(catData.id, dataBaseApiCats, event, this)
+        })
+        // popupInit(catData.id, dataBaseApiCats, evt)
+    })
+}
+
+// showCardsApiCats([catsInfo[9], catsInfo[10]])
+[catsInfo[catsInfo.length-2], catsInfo[catsInfo.length-1]].forEach(catData => {
     const newElement = new Card(catData, "#card-template",handleClickCatImage);
     cardsContainer.append(newElement.getElement())
+    const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
+    openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data() {
+        popupInit(catData.id, catsInfo, event, this)
+    })
 })
 
 formCatAdd.addEventListener('submit', handleFormToCard)
@@ -103,9 +138,24 @@ popupAdd.setEventListener();
 popupImage.setEventListener();
 
 api.getAllApiCats()
- .then(data => {
-    console.log(data);
+  .then(data => {
+    // dataBaseApiCats = data;
+    dataBaseApiCats = data.map(({
+        favorite: favourite,
+        image: img_link,
+        ...rest
+    }) => ({
+        favourite,
+        img_link,
+        ...rest
+    }))
+    console.log(dataBaseApiCats);
+    showCardsApiCats(dataBaseApiCats)
  })
+  .catch(function(err){
+    console.log(err);
+    }) 
+
 
 // popupImage.open('https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg')
 

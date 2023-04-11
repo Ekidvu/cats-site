@@ -65,39 +65,39 @@ const cats = [
         "Прелестная Стефани – трогательная, добродушная и очень-очень общительная девочка как никто другой нуждается в заботе и любви. Приучена к лотку и когтеточке",
       id: 6
     },
-    {
-      name: "Дуся",
-      img_link:
-        "https://www.friendforpet.ru/api/sites/default/files/2022-02/B1444207-6EE3-4BA4-97F7-2F9666AE2F63.jpeg",
-      age: 3,
-      rate: 9,
-      favourite: false,
-      description:
-        "Дусеньке около 1 года с небольшим, здорова, привита, стерилизована. Лоточек и когтеточку знает прекрасно. Очень общительная и нежная, хочет постоянного внимания.",
-      id: 7
-    },
-    {
-      name: "Бруно",
-      img_link:
-        "https://www.friendforpet.ru/api/sites/default/files/2022-01/IMG-20211223-WA0049.jpg",
-      age: 1,
-      rate: 10,
-      favourite: false,
-      description:
-        "Очаровательный активный кот Бруно, находится в постоянном движении! Очаровательный и ласковый кот. Приучен к лотку, ладит с другими котами, привит.",
-      id: 8
-    },
-    {
-      name: "Светлячок",
-      img_link:
-        "https://www.friendforpet.ru/api/sites/default/files/2022-01/%D1%81%D0%B2%D0%B5%D1%82%D0%BB%D1%8F%D1%87%D0%BE%D0%BA4_%D0%B0%D0%BB%D0%B5%D0%BA%D1%81.jpg",
-      age: 1,
-      rate: 9,
-      favourite: true,
-      description:
-        "Немного боязливый, но очень добрый и нежный кот Светлячок. Приучен к лотку и когтеточке, ладит с детьми, привит. Станет вам хорошим другом",
-      id: 9
-    },
+    // {
+    //   name: "Дуся",
+    //   img_link:
+    //     "https://www.friendforpet.ru/api/sites/default/files/2022-02/B1444207-6EE3-4BA4-97F7-2F9666AE2F63.jpeg",
+    //   age: 3,
+    //   rate: 9,
+    //   favourite: false,
+    //   description:
+    //     "Дусеньке около 1 года с небольшим, здорова, привита, стерилизована. Лоточек и когтеточку знает прекрасно. Очень общительная и нежная, хочет постоянного внимания.",
+    //   id: 9
+    // },
+    // {
+    //   name: "Бруно",
+    //   img_link:
+    //     "https://www.friendforpet.ru/api/sites/default/files/2022-01/IMG-20211223-WA0049.jpg",
+    //   age: 1,
+    //   rate: 10,
+    //   favourite: false,
+    //   description:
+    //     "Очаровательный активный кот Бруно, находится в постоянном движении! Очаровательный и ласковый кот. Приучен к лотку, ладит с другими котами, привит.",
+    //   id: 10
+    // },
+    // {
+    //   name: "Светлячок",
+    //   img_link:
+    //     "https://www.friendforpet.ru/api/sites/default/files/2022-01/%D1%81%D0%B2%D0%B5%D1%82%D0%BB%D1%8F%D1%87%D0%BE%D0%BA4_%D0%B0%D0%BB%D0%B5%D0%BA%D1%81.jpg",
+    //   age: 1,
+    //   rate: 9,
+    //   favourite: true,
+    //   description:
+    //     "Немного боязливый, но очень добрый и нежный кот Светлячок. Приучен к лотку и когтеточке, ладит с детьми, привит. Станет вам хорошим другом",
+    //   id: 11
+    // },
     {
       name: "Котух Шнипцель",
       img_link:
@@ -107,7 +107,7 @@ const cats = [
       favourite: true,
       description:
         "Боевой кот-индус. Этот кодзилла задаст вам жару. Готов отстоять честь и достоинство в бою за вискас. Ещe много чего готов отстоять. Например, грог.",
-      id: 10
+      id: 7
     }
 ];
   
@@ -117,15 +117,17 @@ let divAuthCloseBtn = document.createElement('button');
 let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
 let authBtn = document.querySelector('#author');
+// const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
 
-let popupInit = (id, catsInfo, evt) => {
+
+let popupInit = (id, catsInfo, evt, clickEl) => {
   let popup_element; 
   let editBtnOnCard = document.querySelectorAll('.editBtn');
   let partsOfCards = document.querySelectorAll(`#id_${id} .part_of_card`);  
   let addButton = document.querySelector('#add');
   let addButtonInner = document.querySelector('#add').firstChild;
-
   // console.log(evt.target.closest('.isLiked'));
+
   switch (evt.target) {
     case editBtnOnCard[id-1]:
     case document.querySelectorAll('.editBtn .fa-pen')[id-1]:
@@ -133,6 +135,13 @@ let popupInit = (id, catsInfo, evt) => {
       popup_element = document.querySelector('#edit-modal');
       // popup_element.removeEventListener('click', closeByClosest)
       showForm(id, catsInfo, evt);
+      break
+    case clickEl:
+      document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
+      popup_element = document.querySelector('#edit-modal');
+      // popup_element.removeEventListener('click', closeByClosest)
+      // console.log(dataBaseApiCats);
+      showForm(id, catsInfo, evt, clickEl);
       break
     case partsOfCards[0]: 
     case partsOfCards[1]:  
@@ -187,12 +196,12 @@ function closeByEsc(evt) {
 }
 
 function renewKotuhIPerchik(id) {
-  if (catsInfo[id-1].id === 10 || catsInfo[id-1].id === 11) {
+  if (catsInfo[id-1].id === 7 || catsInfo[id-1].id === 8) {
     switch (catsInfo[id-1].id){
-      case 10:          
+      case 7:          
         renewKotuh(id);
         break
-      case 11:
+      case 8:
         renewPerchik(id);
         break
       default:

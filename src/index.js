@@ -3,21 +3,10 @@
 
 let cards = document.querySelector('.cards');
 let catsInfo = [...cats];
-newInfo.id = catsInfo.length + 1
+// newInfo.id = catsInfo.length + 1
 catsInfo.push(newInfo)
 
 showAllCats(catsInfo)
-
-// function showFirstSectionCats(catsArray, indexArray) {
-//     indexArray.forEach(card => {
-//         cardsContainer.removeChild(cardsContainer.children[card])
-//     })
-
-//     catsArray.forEach(catData => {
-//         const newElement = new Card(catData, "#card-template");
-//         cardsContainer.prepend(newElement.getElement())
-//     })
-// }
 
 
 function showAllCats(catsInfo) {

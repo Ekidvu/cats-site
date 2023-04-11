@@ -1,4 +1,5 @@
 let newInfo = {
+    id: 8, 
     name: "Перчик",
     img_link:
       "https://chudo-prirody.com/uploads/posts/2021-08/1628623457_99-p-foto-smeshnie-koti-103.jpg",
