@@ -18,7 +18,7 @@ const config = {
 
 class Api {
   #getResponse(res) {
-    return res.ok ? res.json() : Promise.reject();
+    return res.ok ? res.json() : Promise.reject('Ошибка на стороне сервера');
   }
 
   #baseUrl
@@ -31,23 +31,23 @@ class Api {
 
   getAllApiCats(){
     return fetch(`${this.#baseUrl}/show`)
-      .then(this.#getResponse)
+      .then(this.#getResponse);
   }
 
   getApiCatById(idCat){
     return fetch(`${this.#baseUrl}/show/${idCat}`)
-      .then(this.#getResponse)
+      .then(this.#getResponse);
   }
   getIdsOfApiCats(){
     return fetch(`${this.#baseUrl}/ids`)
-      .then(this.#getResponse)
+      .then(this.#getResponse);
   }
 
   addNewApiCat(data){
     return fetch(`${this.#baseUrl}/add`, {
       method: 'POST',
       headers: this.#headers,
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then(this.#getResponse)
   }
@@ -70,11 +70,10 @@ class Api {
 
 const api = new Api(config);
 
-api.getAllApiCats()
-  .then((dataCats) => {
-    console.log(dataCats);
-
-  })
-
+// api.getAllApiCats()
+//   .then((dataCats) => {
+//     console.log(dataCats);
+//   })
 
 // api.updateApiCatById(2, {"name": "Pater Catnips"})
+

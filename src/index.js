@@ -1,3 +1,6 @@
+// import { newInfo } from './api.js'
+// import { api } from './api.js'
+
 let cards = document.querySelector('.cards');
 let catsInfo = [...cats];
 newInfo.id = catsInfo.length + 1

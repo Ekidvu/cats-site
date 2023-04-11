@@ -1,4 +1,3 @@
-
 const cardsContainer = document.querySelector('.cards__container')
 
 class Card {
@@ -26,7 +25,7 @@ class Card {
 
         cardTitleElement.textContent = this.#data.name;
         cardImageElement.src = this.#data.img_link;
-        
+
         if(!this.#data.favourite) {
             cardLikeElement.remove();
         }
@@ -39,7 +38,6 @@ class Card {
         return this.#element;
     }
 }
-
 
 
 

@@ -102,6 +102,11 @@ formCatAdd.addEventListener('submit', handleFormToCard)
 popupAdd.setEventListener();
 popupImage.setEventListener();
 
+api.getAllApiCats()
+ .then(data => {
+    console.log(data);
+ })
+
 // popupImage.open('https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg')
 
 
