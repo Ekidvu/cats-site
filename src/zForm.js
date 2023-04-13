@@ -13,28 +13,49 @@ let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 //     document.querySelector('#edit-modal').classList.remove("active");
 //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
 // }
+function setupStarsInEditForm(formInfo) {
+    for (let i=0; i< (10-formInfo.rate); i++) { 
+        starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
+    for (let i=0; i<formInfo.rate; i++) {
+        starsDivInEditModal.innerHTML += '<i class="fa-solid fa-star"></i>';
+    }
+}
+
+setListenersOnSubmitAndCloseBtn = (catSubmit, id) => {
+    document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
+        event.preventDefault();
+        catSubmit(event, id);
+        document.querySelector('#edit-modal').classList.remove("active");
+        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+    });
+    document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
+        document.querySelector('#edit-modal').classList.remove("active");
+        document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
+        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+    })
+}
 
 const showForm = (id, catsInfoVar, evt, clickEl) => {
-    let infoPlaceholders = document.querySelectorAll('[type]');
+    let infoPlaceholders = document.querySelectorAll('#edit [type]');
     // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
     img.src = '';
-    let check = document.querySelector('.cards__container').contains(evt.target);
+    // let check = document.querySelector('.cards__container').contains(evt.target);
+    // if(check) {
+    //     catsInfoVar.forEach(el => {
+    //         if (el.id === id) {
+    //             formInfo = {...el}
+    //         }
+    //     })        
+    // } else {
+    //     formInfo = {...catsInfoVar[id-1]};
+    // }
+    formInfo = {...catsInfoVar[id-1]};
 
-    if(check) {
-        catsInfoVar.forEach(el => {
-            if (el.id === id) {
-                formInfo = {...el}
-            }
-        })        
-    } else {
-        formInfo = {...catsInfoVar[id-1]};
-    }
-    
     if (id === false) {
     for (let i=0;i<infoPlaceholders.length;i++) {
     if (infoPlaceholders[i].type === "checkbox") {
-        // infoPlaceholders[i].checked = false;
+        infoPlaceholders[i].checked = false;
     } else if (infoPlaceholders[i].type === "url") {
         infoPlaceholders[i].placeholder = "Ссылка на изображение";
     } else if (infoPlaceholders[i].name === "name") {
@@ -54,6 +75,7 @@ const showForm = (id, catsInfoVar, evt, clickEl) => {
             infoPlaceholders[i].checked = formInfo["favourite"];            
         } else if (infoPlaceholders[i].type === "url") {
             img.src = formInfo.img_link;
+            infoPlaceholders[i].placeholder = "Ссылка на изображение";
         } else if (infoPlaceholders[i].id === "card_id") {
             infoPlaceholders[i].placeholder = `${id}`;
         } else {
@@ -63,30 +85,42 @@ const showForm = (id, catsInfoVar, evt, clickEl) => {
                 }
             }}
         }
-    for (let i=0; i< (10-formInfo.rate); i++) { 
-        starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
-    for (let i=0; i<formInfo.rate; i++) {
-        starsDivInEditModal.innerHTML += '<i class="fa-solid fa-star"></i>';
-    }
+    setupStarsInEditForm(formInfo)
+    // for (let i=0; i< (10-formInfo.rate); i++) { 
+    //     starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
+    // for (let i=0; i<formInfo.rate; i++) {
+    //     starsDivInEditModal.innerHTML += '<i class="fa-solid fa-star"></i>';
+    // }
     }
 
-    document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
-        event.preventDefault();
-        catSubmitFormInfo(event);
-        document.querySelector('#edit-modal').classList.remove("active");
-        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    });
-    // console.log(evt.target);
-    document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
-        document.querySelector('#edit-modal').classList.remove("active");
-        document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
-        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    })
+    setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, id)
+    // document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
+    //     event.preventDefault();
+    //     catSubmitFormInfo(event);
+    //     document.querySelector('#edit-modal').classList.remove("active");
+    //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+    // });
+    // document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
+    //     document.querySelector('#edit-modal').classList.remove("active");
+    //     document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
+    //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
+    // })
 };
 
-catSubmitFormInfo = (event) => {
+function updateCatInfoAfterEditForm() {
+    newData = {...formInfo, ...newFormInfo};
+    catsInfo = catsInfo.map(function(cat) {
+        if (cat.id === newData.id) {
+            updatedCats = {...cat, ...newData};
+            return updatedCats;
+        }
+    return cat; 
+    })  
+}
+
+catSubmitFormInfo = (event,id) => {
     event.preventDefault();
-    let id = Array.from(formSub).find(e => e.id === "card_id").placeholder;
+    // let id = Array.from(formSub).find(e => e.id === "card_id").placeholder;
 
     formSub.forEach(e => {
         if(e.name === "favourite") {
@@ -109,20 +143,20 @@ catSubmitFormInfo = (event) => {
         catsInfo.push(newCat)
         console.log(catsInfo);
     } else if (titleOfForm.innerText === "Смотр красавца!") {
-        newData = {...formInfo, ...newFormInfo};
-        catsInfo = catsInfo.map(function(cat) {
-            if (cat.id === newData.id) {
-                updatedCats = {...cat, ...newData};
-                return updatedCats;
-            }
-        return cat; 
-        })  
+        updateCatInfoAfterEditForm()
+        // newData = {...formInfo, ...newFormInfo};
+        // catsInfo = catsInfo.map(function(cat) {
+        //     if (cat.id === newData.id) {
+        //         updatedCats = {...cat, ...newData};
+        //         return updatedCats;
+        //     }
+        // return cat; 
+        // })  
         renewKotuhIPerchik(id);
     }
 
     formInfo = {};
     newFormInfo = {};
-    // renewKotuhIPerchik(id);
     editForm.reset()
     showAllCats(catsInfo)    
 } 

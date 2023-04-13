@@ -49,14 +49,12 @@ const popupAdd = new Popup('popup-add');
 const popupImage = new PopupShowImage('popup-cat-image');
 
 const formCatAdd = document.querySelector('#popup-form');
-
+let newFormInfoApiCat = {};
 
 btnAddCatPopup.addEventListener('click', (e) => {
     e.preventDefault();
     popupAdd.open();
 })
-
-// popupAdd.open()
 
 // console.log(document.querySelector(`.popup`));
 
@@ -111,25 +109,138 @@ function handleClickCatImage(dataSrc) {
 function showCardsApiCats(arr) {
     arr.forEach(catData => {
         const newElement = new Card(catData, "#card-template",handleClickCatImage);
-        cardsContainer.prepend(newElement.getElement())
-        // console.log(catData.id);
-        const openEditApiCard = document.querySelector('.cards__container .card h2')
-        // console.log(openEditApiCard);
+        cardsContainer.prepend(newElement.getElement());
+        const openEditApiCard = document.querySelector('.cards__container .card h2');
         openEditApiCard.addEventListener('click', function data() {
             popupInit(catData.id, dataBaseApiCats, event, this)
         })
-        // popupInit(catData.id, dataBaseApiCats, evt)
     })
 }
 
-// showCardsApiCats([catsInfo[9], catsInfo[10]])
-[catsInfo[catsInfo.length-2], catsInfo[catsInfo.length-1]].forEach(catData => {
-    const newElement = new Card(catData, "#card-template",handleClickCatImage);
-    cardsContainer.append(newElement.getElement())
+function showFormApiCats(id, catsInfoVar, evt, clickEl) {
+    starsDivInEditModal.innerHTML = '';
+    catsInfoVar.forEach(el => {
+        if (el.id === id) {
+            formInfo = {...el}
+        }
+    })
+    console.log(formInfo);
+
+    let infoPlaceholders = document.querySelectorAll('#edit-modal [type]');
+    // if(formInfo.img_link) {
+    //     document.querySelector('#show__img img').src = formInfo.img_link;
+    // }
+    document.querySelector('#show__img img').src = formInfo?.img_link
+    infoPlaceholders.forEach(el => {        
+        if(el.type === 'checkbox') {
+            el.checked = formInfo.favourite === true ? formInfo.favourite : false;
+            console.log(el.checked);
+        }     
+        if(el.type !== 'checkbox') {
+            el.placeholder = formInfo[`${el.name}`];
+        }
+        if(el.type === "url") {
+            el.placeholder = 'Попробуй изменить внешность красавца';
+        }   
+    })
+        // switch (el.name) {
+        //     case 'name':
+        //         el.placeholder = formInfo.name;
+        //     break
+        //     case 'url':
+        //         el.placeholder = formInfo.name;
+        //     break
+        //     case 'age':
+        //         el.placeholder = formInfo.age;
+        //     break
+        //     case 'rate':
+        //         el.placeholder = formInfo.rate;
+        //     break
+        //     case 'favourite':
+        //         el.placeholder = formInfo.name;
+        //     break
+        //     case 'description':
+        //         el.placeholder = formInfo.description;
+        //     break
+        // }
+    setupStarsInEditForm(formInfo)
+    if(formInfo.id === 7 || formInfo.id === 8) {
+        setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, formInfo.id)
+    } else {
+        setListenersOnSubmitAndCloseBtn(catSubmitApiCats, formInfo.id)
+    }
+                
+}
+
+function catSubmitApiCats(event, id) {
+    event.preventDefault();
+
+    formSub.forEach(e => {
+        if(e.name === "favourite") {
+            newFormInfo["favorite"] = e.checked;
+            newFormInfoApiCat["favourite"] = e.checked;
+        } else if (e.name === "url") {
+            newFormInfo['image'] = !!e.value ? e.value : img.src;
+            newFormInfoApiCat['img_link'] = !!e.value ? e.value : img.src;
+        } else if (!!e.value && e.name !== "url") {
+            newFormInfo[e.name] = e.value;
+            newFormInfoApiCat[e.name] = e.value;
+        }
+    })
+    console.log(newFormInfo);
+
+    dataBaseApiCats = dataBaseApiCats.map(function(cat) {
+        if (cat.id === id) {
+            updatedCats = {...cat, ...newFormInfoApiCat};
+            return updatedCats;
+        }
+    return cat; 
+    })
+
+    api.updateApiCatById(id, newFormInfo)
+     .then(function() {
+        showUpdatedApiCat(newFormInfoApiCat, id)
+    })
+     .catch(function(err){
+        console.log(err);
+    })
+
+    // newFormInfoApiCat = {};
+    newFormInfo = {};
+    editForm.reset()
+}
+
+function showUpdatedApiCat(newCatInfo, id) {
+    // dataBaseApiCats = [...dataBaseApiCats, ...newCatInfo]
+    // let currentApiCat = dataBaseApiCats.findIndex(e => e.id === id)
+    // newData = {...currentApiCat, ...newCatInfo};
+    let indexOfCat = dataBaseApiCats.findIndex(e => e.id === id);
+    cardsContainer.removeChild(cardsContainer.children[indexOfCat]);
+    console.log(newCatInfo);
+    const newElement = new Card(dataBaseApiCats[indexOfCat], "#card-template", handleClickCatImage);
+    cardsContainer.insertBefore(newElement.getElement(), cardsContainer.children[indexOfCat]);
+
+    const openEditApiCard = cardsContainer.children[indexOfCat].querySelector('h2');
+    openEditApiCard.addEventListener('click', function data() {
+        popupInit(id, dataBaseApiCats, event, this)
+    })
+}
+
+function openEditApiCardTriggerFunc(catData){
     const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
     openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data() {
         popupInit(catData.id, catsInfo, event, this)
     })
+}
+
+[catsInfo[catsInfo.length-2], catsInfo[catsInfo.length-1]].forEach(catData => {
+    const newElement = new Card(catData, "#card-template",handleClickCatImage);
+    cardsContainer.append(newElement.getElement())
+    openEditApiCardTriggerFunc(catData)
+    // const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
+    // openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data() {
+    //     popupInit(catData.id, catsInfo, event, this)
+    // })
 })
 
 formCatAdd.addEventListener('submit', handleFormToCard)

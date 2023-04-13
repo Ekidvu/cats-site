@@ -141,7 +141,7 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
       popup_element = document.querySelector('#edit-modal');
       // popup_element.removeEventListener('click', closeByClosest)
       // console.log(dataBaseApiCats);
-      showForm(id, catsInfo, evt, clickEl);
+      showFormApiCats(id, catsInfo, evt, clickEl);
       break
     case partsOfCards[0]: 
     case partsOfCards[1]:  
@@ -165,6 +165,7 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
       } else if (popup_element.classList.contains('fa-regular')) {
         catsInfo[id-1].favourite = false;
       }
+
       console.log(catsInfo[id-1].id);
       renewKotuhIPerchik(id)
       break
@@ -214,12 +215,14 @@ function renewKotuh(id) {
   cardsContainer.removeChild(cardsContainer.children[cardsContainer.children.length-2]);
   const newElementKotuh = new Card(catsInfo[id-1], "#card-template", handleClickCatImage);
   cardsContainer.insertBefore(newElementKotuh.getElement(), cardsContainer.lastElementChild);
+  openEditApiCardTriggerFunc(catsInfo[id-1])
 }
 
 function renewPerchik(id) {
   cardsContainer.removeChild(cardsContainer.lastElementChild);
   const newElementPerchik = new Card(catsInfo[id-1], "#card-template", handleClickCatImage);
   cardsContainer.append(newElementPerchik.getElement());
+  openEditApiCardTriggerFunc(catsInfo[id-1])
 }
 
 divAuthCloseBtn.classList.add('modal-close', 'btn', 'closeBtnAuthor');
