@@ -147,8 +147,19 @@ input:focus, textarea:focus {
     font-size: 18px;
 }
 
+.popup-login .popup__container{
+    width: 350px;
+}
 
-
+#popup-form-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+#popup-form-login .form___input {
+    grid-column-start: 3 span;
+    height: 40px;
+}
 
 
 /* --- CatShowForm --- */

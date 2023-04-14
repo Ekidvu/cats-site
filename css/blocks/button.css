@@ -50,6 +50,13 @@ header .btn {
     padding-bottom: 0px;    
 } */
 
+.form___btn {
+    font-size: 14px;
+    width: 100%;
+    padding: 10px;
+    grid-column-start: 3;
+    border-radius: 50px;
+}
 
 .popup__close_external {
     border-radius: 5px;
@@ -61,6 +68,18 @@ header .btn {
     color: beige;
 }
 
+button.form___btn.btn {
+    width: 80px;
+}
+
+#popup-form-login .form___btn {
+    width: 110px;
+    font-size: 15px;
+}
+
+/* button.popup__close.btn.modal-close {
+    padding-bottom: 1px;
+} */
 
 
 /* color: rgb(167, 230, 187); 

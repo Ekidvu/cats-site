@@ -46,10 +46,14 @@ class PopupShowImage extends Popup {
 }
 
 const btnAddCatPopup = document.querySelector('#addNewCat');
+const btnOpenPopupLogin = document.querySelector('#login');
 const popupAdd = new Popup('popup-add');
 const popupImage = new PopupShowImage('popup-cat-image');
+const popupLogin = new Popup('popup-login');
 
+// console.log(isAuth);
 const formCatAdd = document.querySelector('#popup-form');
+const formCatLogin = document.querySelector('#popup-form-login');
 let newFormInfoApiCat = {};
 
 btnAddCatPopup.addEventListener('click', (e) => {
@@ -253,6 +257,7 @@ formCatAdd.addEventListener('submit', handleFormToCard)
 
 popupAdd.setEventListener();
 popupImage.setEventListener();
+popupLogin.setEventListener();
 
 api.getAllApiCats()
   .then(data => {
@@ -272,6 +277,8 @@ api.getAllApiCats()
   .catch(function(err){
     console.log(err);
     }) 
+
+
 
 
 // popupImage.open('https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg')

@@ -26,21 +26,19 @@ body {
     transform: scale(1.05);
 }
 
-/* .scale img {
-    transition: 1s; 
-    display: block;
-   }
-
-.scale img:hover {
-    transform: scale(1.2);
-} */
-/* .zoom.scale:hover {
-    transform: scale(1.5);
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
-.zoom.scale {
-
-} */
 
 .copyright {
     display: flex;
