@@ -121,6 +121,7 @@
     height: 20px;
     font-size: 17px;
     padding-bottom: 1px;
+    padding-right: 10px;
 }
 .modal-container div#rate_stars_div_edit {
     align-items: start;

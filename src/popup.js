@@ -1,4 +1,5 @@
 let dataBaseApiCats = [];
+let cardIdDivForApiCat = document.querySelector('#edit #card_id');
 
 class Popup {
     #handleEscapeUp = (evt) => {
@@ -111,7 +112,7 @@ function showCardsApiCats(arr) {
         const newElement = new Card(catData, "#card-template",handleClickCatImage);
         cardsContainer.prepend(newElement.getElement());
         const openEditApiCard = document.querySelector('.cards__container .card h2');
-        openEditApiCard.addEventListener('click', function data() {
+        openEditApiCard.addEventListener('click', function data(event) {
             popupInit(catData.id, dataBaseApiCats, event, this)
         })
     })
@@ -125,6 +126,8 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
         }
     })
     console.log(formInfo);
+    // Array.from(formSub).find(e => e.id === "card_id").placeholder = `${id}`;
+    formSub.forEach(e => { if (e.id === 'card_id') { e.textContent = id } }); 
 
     let infoPlaceholders = document.querySelectorAll('#edit-modal [type]');
     // if(formInfo.img_link) {
@@ -134,7 +137,7 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
     infoPlaceholders.forEach(el => {        
         if(el.type === 'checkbox') {
             el.checked = formInfo.favourite === true ? formInfo.favourite : false;
-            console.log(el.checked);
+            // console.log(el.checked);
         }     
         if(el.type !== 'checkbox') {
             el.placeholder = formInfo[`${el.name}`];
@@ -143,43 +146,48 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
             el.placeholder = 'Попробуй изменить внешность красавца';
         }   
     })
-        // switch (el.name) {
-        //     case 'name':
-        //         el.placeholder = formInfo.name;
-        //     break
-        //     case 'url':
-        //         el.placeholder = formInfo.name;
-        //     break
-        //     case 'age':
-        //         el.placeholder = formInfo.age;
-        //     break
-        //     case 'rate':
-        //         el.placeholder = formInfo.rate;
-        //     break
-        //     case 'favourite':
-        //         el.placeholder = formInfo.name;
-        //     break
-        //     case 'description':
-        //         el.placeholder = formInfo.description;
-        //     break
-        // }
+
+    // submitButtonEdit.addEventListener('click', pushFormUpdateButton(event, formInfo.id)) 
+
     setupStarsInEditForm(formInfo)
-    if(formInfo.id === 7 || formInfo.id === 8) {
-        setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, formInfo.id)
+    if(formInfo.id === IDkotuh || formInfo.id === IDperchik) {
+        // setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, formInfo.id)
+        submitButtonEdit.addEventListener('click', pushFormUpdateFor2Cats)
     } else {
-        setListenersOnSubmitAndCloseBtn(catSubmitApiCats, formInfo.id)
-    }
-                
+        // console.log('yqahyqahyqahyqahyqah');
+        // setListenersOnSubmitAndCloseBtn(catSubmitApiCats, formInfo.id)
+        submitButtonEdit.addEventListener('click', pushFormUpdateButton) 
+        document.querySelector('#edit-modal .modal-close').addEventListener('click', pushFormCloseButton)
+    }                
 }
 
-function catSubmitApiCats(event, id) {
-    event.preventDefault();
+function pushFormUpdateFor2Cats(event) {
+    event.preventDefault()
+    document.querySelector('#edit-modal .modal-close').addEventListener('click', pushFormCloseButton);
+    catSubmitFormInfo(event, formInfo.id);
+    editModalPopup.classList.remove("active");
+    submitButtonEdit.removeEventListener('click', pushFormUpdateFor2Cats)
+}
+
+function pushFormUpdateButton(event) {    
+    event.preventDefault()
+    id = Number(cardIdDivForApiCat.textContent);
+    catSubmitApiCats(id);
+    editModalPopup.classList.remove("active");
+    submitButtonEdit.removeEventListener('click', pushFormUpdateButton);
+}
+
+
+function catSubmitApiCats(id) {
+    // event.preventDefault();
+    // let id = Array.from(formSub).find(e => e.id === "card_id").placeholder;
+    newFormInfoApiCat.id = id;
 
     formSub.forEach(e => {
         if(e.name === "favourite") {
             newFormInfo["favorite"] = e.checked;
             newFormInfoApiCat["favourite"] = e.checked;
-        } else if (e.name === "url") {
+        } else if (e.name === "url" && e.value) {
             newFormInfo['image'] = !!e.value ? e.value : img.src;
             newFormInfoApiCat['img_link'] = !!e.value ? e.value : img.src;
         } else if (!!e.value && e.name !== "url") {
@@ -208,39 +216,37 @@ function catSubmitApiCats(event, id) {
     // newFormInfoApiCat = {};
     newFormInfo = {};
     editForm.reset()
+    // closeEventListenersOnUpdButton()
 }
 
 function showUpdatedApiCat(newCatInfo, id) {
     // dataBaseApiCats = [...dataBaseApiCats, ...newCatInfo]
-    // let currentApiCat = dataBaseApiCats.findIndex(e => e.id === id)
     // newData = {...currentApiCat, ...newCatInfo};
-    let indexOfCat = dataBaseApiCats.findIndex(e => e.id === id);
+    let indexOfCat = dataBaseApiCats.length - dataBaseApiCats.findIndex(e => e.id === id) - 1;
+    console.log(indexOfCat);
+
     cardsContainer.removeChild(cardsContainer.children[indexOfCat]);
     console.log(newCatInfo);
-    const newElement = new Card(dataBaseApiCats[indexOfCat], "#card-template", handleClickCatImage);
+    const newElement = new Card(dataBaseApiCats[dataBaseApiCats.length - indexOfCat -1], "#card-template", handleClickCatImage);
     cardsContainer.insertBefore(newElement.getElement(), cardsContainer.children[indexOfCat]);
 
     const openEditApiCard = cardsContainer.children[indexOfCat].querySelector('h2');
-    openEditApiCard.addEventListener('click', function data() {
+    openEditApiCard.addEventListener('click', function data(event) {
         popupInit(id, dataBaseApiCats, event, this)
     })
 }
 
 function openEditApiCardTriggerFunc(catData){
     const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
-    openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data() {
-        popupInit(catData.id, catsInfo, event, this)
-    })
+    openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data(event) {
+    popupInit(catData.id, catsInfo, event, this)        
+    }) 
 }
 
-[catsInfo[catsInfo.length-2], catsInfo[catsInfo.length-1]].forEach(catData => {
+[catsInfo[IDkotuh-1], catsInfo[IDperchik-1]].forEach(catData => {
     const newElement = new Card(catData, "#card-template",handleClickCatImage);
     cardsContainer.append(newElement.getElement())
     openEditApiCardTriggerFunc(catData)
-    // const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
-    // openEditApiCard[openEditApiCard.length-1].addEventListener('click', function data() {
-    //     popupInit(catData.id, catsInfo, event, this)
-    // })
 })
 
 formCatAdd.addEventListener('submit', handleFormToCard)

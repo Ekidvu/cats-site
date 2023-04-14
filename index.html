@@ -18,7 +18,8 @@
         </div> -->
         <div class="headerButtons">
             <button class="btn" id="addNewCat"><i class="fa-solid fa-plus" id="addNewCat__plus"></i></button> 
-            <button class="btn" id="add" onclick="popupInit(false,catsInfo, event)"><i class="fa-solid fa-plus" id="header__plus"></i></button>              
+            <button class="btn" id="add" onclick="popupInit(false, catsInfo, event)"><i class="fa-solid fa-plus" id="header__plus"></i></button>
+            <button class="btn" id="login">Войти</button>
         </div>     
     </header>
     <main class="main container">
@@ -137,6 +138,7 @@
             </form>
         </div>
     </div>
+    
     <div class="popup popup-cat-image">
         <div class="popup__container">
             <button class="popup__close btn popup__close_external"><i class="fa-solid fa-xmark"></i></button>
@@ -144,14 +146,27 @@
         </div>
     </div>
 
+    <div class="popup popup-login">
+        <div class="popup__container">
+            <button class="popup__close btn modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <h2>Авторизация</h2>
+            <form class="form" id="popup-form-login">
+                <input type="email" class="form___input" name="email" required placeholder="Введите email">
+                <input type="password" class="form___input" name="password" placeholder="Введите пароль">
+                <button type="submit" class="form___btn btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
     <!-- -------------------- -->
     <script src="./src/cats.js" defer></script>
     <script src="./src/api.js" defer></script>
     <script src="./src/card.js" defer></script>    
-    <script src="./src/zForm.js" defer></script>
+    <script src="./src/Form.js" defer></script>
     <script src="./src/index.js" defer></script>
     <script src="./src/popup.js" defer></script>
     <script src="./src/popup-img.js" defer></script>
+    <script src="./src/zcookies.js" defer></script>
     <!-- <script src="./src/index.js" type="module" defer></script> -->
 </body>
 </html>

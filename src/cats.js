@@ -110,13 +110,17 @@ const cats = [
       id: 7
     }
 ];
-  
+const IDkotuh = 7;
+const IDperchik = 8;
+
 let divAuth = document.createElement('div');
 let divAuthContain = document.createElement('div');
 let divAuthCloseBtn = document.createElement('button');
 let authPic = document.createElement('img');
 let authPicDesc = document.createElement('span');
 let authBtn = document.querySelector('#author');
+const submitButtonEdit = document.querySelector('#btn__upd');
+const editModalPopup = document.querySelector('#edit-modal');
 // const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
 
 
@@ -132,16 +136,22 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
     case editBtnOnCard[id-1]:
     case document.querySelectorAll('.editBtn .fa-pen')[id-1]:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
-      popup_element = document.querySelector('#edit-modal');
-      // popup_element.removeEventListener('click', closeByClosest)
+      popup_element = editModalPopup;
       showForm(id, catsInfo, evt);
+      document.querySelector('#edit-modal .modal-close').addEventListener('click', pushFormCloseButton);
+      submitButtonEdit.addEventListener('click', catSubmitFormInfo);
       break
     case clickEl:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
-      popup_element = document.querySelector('#edit-modal');
+      popup_element = editModalPopup;
       // popup_element.removeEventListener('click', closeByClosest)
       // console.log(dataBaseApiCats);
-      showFormApiCats(id, catsInfo, evt, clickEl);
+      if(id === IDkotuh || id === IDperchik) {
+        showFormApiCats(id, catsInfo, evt, clickEl)
+      } else {
+        showFormApiCats(id, dataBaseApiCats, evt, clickEl);
+      }
+      
       break
     case partsOfCards[0]: 
     case partsOfCards[1]:  
@@ -150,7 +160,7 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
       break
     case addButtonInner:
     case addButton: 
-      popup_element = document.querySelector('#edit-modal');
+      popup_element = editModalPopup;
       // popup_element.removeEventListener('click', closeByClosest) 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
       showForm(false, catsInfo, evt);
@@ -165,44 +175,65 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
       } else if (popup_element.classList.contains('fa-regular')) {
         catsInfo[id-1].favourite = false;
       }
-
-      console.log(catsInfo[id-1].id);
       renewKotuhIPerchik(id)
       break
     default:
       break
-  }
-    
-  console.log(catsInfo[id-1]);
+  }    
+  // console.log(catsInfo[id-1]);
   popup_element.classList.add('active');
-  popup_element.addEventListener('mousedown', function closeByClosest(evt) {
-    if(evt.target.classList.contains('modal')) {
-      popup_element.classList.remove('active')
-      document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    }
-    // popup_element.removeEventListener('click', closeByClosest)
-  })
-  document.addEventListener('keyup', closeByEsc);
+  popup_element.addEventListener('mousedown', closeByClosest);
+  document.addEventListener('keyup', closeByEsc)
 }
 
-function closeByEsc(evt) {  
+function pushFormCloseButton() {
+  editModalPopup.classList.remove("active");
+  document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton);
+}
+
+// function closeByEscAndClosest(evt, id) {
+//   closeByClosest(evt, id);
+//   document.addEventListener('keyup', closeByEsc(evt, id))
+// }
+
+// function closeOnSubmit(event, id) {
+//   event.preventDefault();
+//   catSubmitFormInfo(event, id);
+// }
+
+
+function closeByClosest(evt, id) {
+  // console.log(evt.target);
+  if(evt.target.classList.contains('modal')) {
+    editModalPopup.classList.remove('active')
+    let activeModals = document.querySelectorAll('.active');
+    activeModals.forEach(e => {
+      e.classList.remove('active')
+    });
+    submitButtonEdit.removeEventListener('click', catSubmitFormInfo);
+    editModalPopup.addEventListener('mousedown', closeByClosest);
+    document.addEventListener('keyup', closeByEsc)
+  }
+}
+
+function closeByEsc(evt, id) { 
   let close = document.querySelectorAll('.modal-close');
   if (evt.key === "Escape") {
     close.forEach(e => {
-      if (e.parentElement.parentElement.hasAttribute('class',   'active')) { e.parentElement.parentElement.classList.remove('active') }
+      if (e.parentElement.parentElement.hasAttribute('class', 'active')) { e.parentElement.parentElement.classList.remove('active') }
     })
+    document.removeEventListener('keyup', closeByEsc);
+    submitButtonEdit.removeEventListener('click', catSubmitFormInfo); 
   }
-  document.removeEventListener('keyup', closeByEsc);
-  document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
 }
 
 function renewKotuhIPerchik(id) {
-  if (catsInfo[id-1].id === 7 || catsInfo[id-1].id === 8) {
+  if (catsInfo[id-1].id === IDkotuh || catsInfo[id-1].id === IDperchik) {
     switch (catsInfo[id-1].id){
-      case 7:          
+      case IDkotuh:          
         renewKotuh(id);
         break
-      case 8:
+      case IDperchik:
         renewPerchik(id);
         break
       default:
@@ -215,7 +246,11 @@ function renewKotuh(id) {
   cardsContainer.removeChild(cardsContainer.children[cardsContainer.children.length-2]);
   const newElementKotuh = new Card(catsInfo[id-1], "#card-template", handleClickCatImage);
   cardsContainer.insertBefore(newElementKotuh.getElement(), cardsContainer.lastElementChild);
-  openEditApiCardTriggerFunc(catsInfo[id-1])
+  // openEditApiCardTriggerFunc(catsInfo[id-1])
+  const openEditApiCard = document.querySelectorAll('.cards__container .card h2');
+    openEditApiCard[openEditApiCard.length-2].addEventListener('click', function data(event) {
+    popupInit(id, catsInfo, event, this)        
+  }) 
 }
 
 function renewPerchik(id) {
@@ -239,6 +274,8 @@ document.body.append(divAuth);
 const popupInitAuth = () => {
   let modalAuthCloseButton = document.querySelector('.modalAuth');
   modalAuthCloseButton.classList.add('active');
+  modalAuthCloseButton.addEventListener('mousedown', closeByClosest)
+  document.addEventListener('keyup', closeByEsc);
   document.querySelector('.closeBtnAuthor').addEventListener('click', function closeAuthMonkey() {
     modalAuthCloseButton.classList.remove('active');
     document.addEventListener('keyup', closeByEsc);
@@ -253,9 +290,49 @@ const popupInitAuth = () => {
 // https://www.fonstola.ru/images/202006/fonstola.ru_394698.jpg
 // https://kot-pes.com/wp-content/uploads/2019/03/post_5b48c1cfca497.jpg
 
+// https://i.ytimg.com/vi/FdwTRyS02X0/maxresdefault.jpg
+// https://ptzgovorit.ru/sites/default/files/topoboi.com-15654.jpg
 
 
 // https://coolsen.ru/wp-content/uploads/2021/11/001-20211109_131908.jpg
 // https://avatars.dzeninfra.ru/get-zen_doc/4055701/pub_61180c34cdef433a85fc6bd8_613e32e588d59c30fddf1e71/scale_1200
 // 
 // 
+
+
+// {
+// age: 1,
+// description: "Мухлюет в карты, спорит когда неправ, гадит в тапки, и цитирует Маяковского. Необычный кот с завышенной самооценкой. Не ест бананы.",
+// favourite: false,
+// id: 4,
+// img_link: "https://www.fonstola.ru/images/202006/fonstola.ru_394698.jpg",
+// name: "Marca Lapa",
+// rate: 6  
+// },
+// {
+// age: 4,
+// description: "У этого котика длинный язык и короткие мозги. Он очень забавно причесывается, и веселит всю семью великанов.",
+// favourite: false,
+// id: 56,
+// img_link: "https://i.ytimg.com/vi/FdwTRyS02X0/maxresdefault.jpg",
+// name: "mr. Booch",
+// rate: 6
+// },
+// {
+// age: 6,
+// description: "Ластиться. Поедает ластики.",
+// favourite: false,
+// id: 99,
+// img_link: "https://ptzgovorit.ru/sites/default/files/topoboi.com-15654.jpg",
+// name: "Сарофанчик",
+// rate: 3
+// }
+// {
+// age: 3,
+// description: "“Кот-джентельмен, кот-мутант”. Так отзываются о нем те, кто не ели бобов. Кот любит редиску, и любит кидаться ботвой в соседей",
+// favourite: true,
+// id: 15,
+// img_link: "https://kot-pes.com/wp-content/uploads/2019/03/post_5b48c1cfca497.jpg",
+// name: "Oscar Post",
+// rate: 3 
+// },

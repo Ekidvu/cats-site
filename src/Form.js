@@ -21,21 +21,13 @@ function setupStarsInEditForm(formInfo) {
     }
 }
 
-setListenersOnSubmitAndCloseBtn = (catSubmit, id) => {
-    document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
-        event.preventDefault();
-        catSubmit(event, id);
-        document.querySelector('#edit-modal').classList.remove("active");
-        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    });
-    document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
-        document.querySelector('#edit-modal').classList.remove("active");
-        document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
-        document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    })
-}
+// function closeEventListenersOnUpdButton(){
+//     submitButtonEdit.removeEventListener('click', pushFormUpdateButton);
+//     submitButtonEdit.removeEventListener('click', closeByClosest)
+// }
 
-const showForm = (id, catsInfoVar, evt, clickEl) => {
+
+const showForm = (id, catsInfoVar, evt) => {
     let infoPlaceholders = document.querySelectorAll('#edit [type]');
     // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
@@ -83,28 +75,10 @@ const showForm = (id, catsInfoVar, evt, clickEl) => {
                 if (key === infoPlaceholders[i].name) {
                     infoPlaceholders[i].placeholder = formInfo[key];
                 }
-            }}
-        }
-    setupStarsInEditForm(formInfo)
-    // for (let i=0; i< (10-formInfo.rate); i++) { 
-    //     starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
-    // for (let i=0; i<formInfo.rate; i++) {
-    //     starsDivInEditModal.innerHTML += '<i class="fa-solid fa-star"></i>';
-    // }
-    }
+    }}}
 
-    setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, id)
-    // document.querySelector('#btn__upd').addEventListener('click', function pushFormUpdateButton(event) {
-    //     event.preventDefault();
-    //     catSubmitFormInfo(event);
-    //     document.querySelector('#edit-modal').classList.remove("active");
-    //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    // });
-    // document.querySelector('#edit-modal .modal-close').addEventListener('click', function pushFormCloseButton() {
-    //     document.querySelector('#edit-modal').classList.remove("active");
-    //     document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton)
-    //     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-    // })
+    setupStarsInEditForm(formInfo)
+    }
 };
 
 function updateCatInfoAfterEditForm() {
@@ -118,9 +92,9 @@ function updateCatInfoAfterEditForm() {
     })  
 }
 
-catSubmitFormInfo = (event,id) => {
+function catSubmitFormInfo(event) {
     event.preventDefault();
-    // let id = Array.from(formSub).find(e => e.id === "card_id").placeholder;
+    let id = Array.from(formSub).find(e => e.id === "card_id").placeholder;
 
     formSub.forEach(e => {
         if(e.name === "favourite") {
@@ -144,21 +118,18 @@ catSubmitFormInfo = (event,id) => {
         console.log(catsInfo);
     } else if (titleOfForm.innerText === "Смотр красавца!") {
         updateCatInfoAfterEditForm()
-        // newData = {...formInfo, ...newFormInfo};
-        // catsInfo = catsInfo.map(function(cat) {
-        //     if (cat.id === newData.id) {
-        //         updatedCats = {...cat, ...newData};
-        //         return updatedCats;
-        //     }
-        // return cat; 
-        // })  
-        renewKotuhIPerchik(id);
+        renewKotuhIPerchik(newData.id);
+        console.log(newData.id);
     }
 
+    // closeEventListenersOnUpdButton()
     formInfo = {};
     newFormInfo = {};
     editForm.reset()
-    showAllCats(catsInfo)    
+    showAllCats(catsInfo)
+    editModalPopup.classList.remove("active");
+    // closeHomeFormOnSubmitRemove(id)
+    submitButtonEdit.removeEventListener('click', catSubmitFormInfo);    
 } 
 
 
@@ -173,7 +144,7 @@ function showCatInfo(id,cats) {
     showCatDesc.lastChild.innerText = `${currentCat.description}`;
     document.querySelector('#show-modal-container .modal-close').addEventListener('click', function closeShowModal() {
         document.querySelector('#show-modal-container').classList.remove('active');
-        document.querySelector('#show-modal-container .modal-close').addEventListener('click', closeShowModal)
+        document.querySelector('#show-modal-container .modal-close').removeEventListener('click', closeShowModal)
     })
     for (let i=0; i < (10-currentCat.rate); i++) { 
         document.querySelector('#stars_block_info').innerHTML += '<i class="fa-regular fa-star"></i>';
