@@ -144,10 +144,8 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
     case clickEl:
       document.querySelector('#edit').previousElementSibling.innerText = "Смотр красавца!";
       popup_element = editModalPopup;
-      // popup_element.removeEventListener('click', closeByClosest)
-      // console.log(dataBaseApiCats);
       if(id === IDkotuh || id === IDperchik) {
-        showFormApiCats(id, catsInfo, evt, clickEl)
+        showFormApiCats(id, catsInfo, evt, clickEl);
       } else {
         showFormApiCats(id, dataBaseApiCats, evt, clickEl);
       }
@@ -161,7 +159,6 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
     case addButtonInner:
     case addButton: 
       popup_element = editModalPopup;
-      // popup_element.removeEventListener('click', closeByClosest) 
       document.querySelector('#edit').previousElementSibling.innerText = "Добавить красавца!";
       showForm(false, catsInfo, evt);
       break
@@ -180,7 +177,6 @@ let popupInit = (id, catsInfo, evt, clickEl) => {
     default:
       break
   }    
-  // console.log(catsInfo[id-1]);
   popup_element.classList.add('active');
   popup_element.addEventListener('mousedown', closeByClosest);
   document.addEventListener('keyup', closeByEsc)
@@ -191,19 +187,7 @@ function pushFormCloseButton() {
   document.querySelector('#edit-modal .modal-close').removeEventListener('click', pushFormCloseButton);
 }
 
-// function closeByEscAndClosest(evt, id) {
-//   closeByClosest(evt, id);
-//   document.addEventListener('keyup', closeByEsc(evt, id))
-// }
-
-// function closeOnSubmit(event, id) {
-//   event.preventDefault();
-//   catSubmitFormInfo(event, id);
-// }
-
-
 function closeByClosest(evt, id) {
-  // console.log(evt.target);
   if(evt.target.classList.contains('modal')) {
     editModalPopup.classList.remove('active')
     let activeModals = document.querySelectorAll('.active');
@@ -292,6 +276,7 @@ const popupInitAuth = () => {
 
 // https://i.ytimg.com/vi/FdwTRyS02X0/maxresdefault.jpg
 // https://ptzgovorit.ru/sites/default/files/topoboi.com-15654.jpg
+// https://fototips.ru/wp-content/uploads/2016/10/pounce_04.jpg
 
 
 // https://coolsen.ru/wp-content/uploads/2021/11/001-20211109_131908.jpg

@@ -3,7 +3,6 @@
 
 let cards = document.querySelector('.cards');
 let catsInfo = [...cats];
-// newInfo.id = catsInfo.length + 1
 catsInfo.push(newInfo)
 
 showAllCats(catsInfo)
@@ -84,9 +83,3 @@ function showCat(cat, catsInfo) {
 
 
 
-
-
-// [catsInfo[9], catsInfo[10]].forEach(catData => {
-//     const newElement = new Card(catData, "#card-template",handleClickCatImage);
-//     cardsContainer.append(newElement.getElement())
-// })

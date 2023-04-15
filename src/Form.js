@@ -8,11 +8,7 @@ let updatedCats
 let img = document.querySelector('form img');
 let starsDivInEditModal = document.querySelector('#rate_stars_div_edit');
 
-// function pushFormUpdateButton(event) {
-//     catSubmitFormInfo(event);
-//     document.querySelector('#edit-modal').classList.remove("active");
-//     document.querySelector('#btn__upd').removeEventListener('click', pushFormUpdateButton);
-// }
+
 function setupStarsInEditForm(formInfo) {
     for (let i=0; i< (10-formInfo.rate); i++) { 
         starsDivInEditModal.innerHTML += '<i class="fa-regular fa-star"></i>' }
@@ -21,15 +17,8 @@ function setupStarsInEditForm(formInfo) {
     }
 }
 
-// function closeEventListenersOnUpdButton(){
-//     submitButtonEdit.removeEventListener('click', pushFormUpdateButton);
-//     submitButtonEdit.removeEventListener('click', closeByClosest)
-// }
-
-
 const showForm = (id, catsInfoVar, evt) => {
     let infoPlaceholders = document.querySelectorAll('#edit [type]');
-    // let cardElem = document.querySelector(`#id_${id}`);
     starsDivInEditModal.innerHTML = '';
     img.src = '';
     // let check = document.querySelector('.cards__container').contains(evt.target);
@@ -119,19 +108,15 @@ function catSubmitFormInfo(event) {
     } else if (titleOfForm.innerText === "Смотр красавца!") {
         updateCatInfoAfterEditForm()
         renewKotuhIPerchik(newData.id);
-        console.log(newData.id);
     }
 
-    // closeEventListenersOnUpdButton()
     formInfo = {};
     newFormInfo = {};
     editForm.reset()
     showAllCats(catsInfo)
     editModalPopup.classList.remove("active");
-    // closeHomeFormOnSubmitRemove(id)
     submitButtonEdit.removeEventListener('click', catSubmitFormInfo);    
 } 
-
 
 function showCatInfo(id,cats) {
     let currentCat = {...catsInfo[id-1]};   

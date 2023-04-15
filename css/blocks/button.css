@@ -68,10 +68,6 @@ header .btn {
     color: beige;
 }
 
-button.form___btn.btn {
-    width: 80px;
-}
-
 #popup-form-login .form___btn {
     width: 110px;
     font-size: 15px;

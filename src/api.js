@@ -39,6 +39,7 @@ class Api {
     return fetch(`${this.#baseUrl}/show/${idCat}`)
       .then(this.#getResponse);
   }
+
   getIdsOfApiCats(){
     return fetch(`${this.#baseUrl}/ids`)
       .then(this.#getResponse);
@@ -61,6 +62,7 @@ class Api {
     })
       .then(this.#getResponse)
   }
+  
   deleteApiCatById(idCat, data){
     return fetch(`${this.#baseUrl}/delete/${idCat}`, {
       method: 'DELETE'

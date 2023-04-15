@@ -55,13 +55,7 @@ const popupLogin = new Popup('popup-login');
 const formCatAdd = document.querySelector('#popup-form');
 const formCatLogin = document.querySelector('#popup-form-login');
 let newFormInfoApiCat = {};
-
-btnAddCatPopup.addEventListener('click', (e) => {
-    e.preventDefault();
-    popupAdd.open();
-})
-
-// console.log(document.querySelector(`.popup`));
+const MAX_LIVE_STORAGE = 10;
 
 function serializeForm(elements) {
     const formData = {};
@@ -98,28 +92,17 @@ function handleFormToCard(e) {
         api.addNewApiCat(cat)
           .then(function() {
             showCardsApiCats([formData])
+            updateLocalStorage(formData, {type: 'ADD_CAT'});
+            popupAdd.close();
           })
           .catch(function(err){
             console.log(err);
           }) 
     })
-    
-    popupAdd.close();
 }
 
 function handleClickCatImage(dataSrc) {
     popupImage.open(dataSrc)
-}
-
-function showCardsApiCats(arr) {
-    arr.forEach(catData => {
-        const newElement = new Card(catData, "#card-template",handleClickCatImage);
-        cardsContainer.prepend(newElement.getElement());
-        const openEditApiCard = document.querySelector('.cards__container .card h2');
-        openEditApiCard.addEventListener('click', function data(event) {
-            popupInit(catData.id, dataBaseApiCats, event, this)
-        })
-    })
 }
 
 function showFormApiCats(id, catsInfoVar, evt, clickEl) {
@@ -134,9 +117,7 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
     formSub.forEach(e => { if (e.id === 'card_id') { e.textContent = id } }); 
 
     let infoPlaceholders = document.querySelectorAll('#edit-modal [type]');
-    // if(formInfo.img_link) {
-    //     document.querySelector('#show__img img').src = formInfo.img_link;
-    // }
+
     document.querySelector('#show__img img').src = formInfo?.img_link
     infoPlaceholders.forEach(el => {        
         if(el.type === 'checkbox') {
@@ -144,22 +125,18 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
             // console.log(el.checked);
         }     
         if(el.type !== 'checkbox') {
-            el.placeholder = formInfo[`${el.name}`];
+            el.placeholder = formInfo[el.name];
+            // el.placeholder = formInfo[`${el.name}`];
         }
         if(el.type === "url") {
             el.placeholder = 'Попробуй изменить внешность красавца';
         }   
     })
 
-    // submitButtonEdit.addEventListener('click', pushFormUpdateButton(event, formInfo.id)) 
-
     setupStarsInEditForm(formInfo)
     if(formInfo.id === IDkotuh || formInfo.id === IDperchik) {
-        // setListenersOnSubmitAndCloseBtn(catSubmitFormInfo, formInfo.id)
         submitButtonEdit.addEventListener('click', pushFormUpdateFor2Cats)
     } else {
-        // console.log('yqahyqahyqahyqahyqah');
-        // setListenersOnSubmitAndCloseBtn(catSubmitApiCats, formInfo.id)
         submitButtonEdit.addEventListener('click', pushFormUpdateButton) 
         document.querySelector('#edit-modal .modal-close').addEventListener('click', pushFormCloseButton)
     }                
@@ -168,6 +145,7 @@ function showFormApiCats(id, catsInfoVar, evt, clickEl) {
 function pushFormUpdateFor2Cats(event) {
     event.preventDefault()
     document.querySelector('#edit-modal .modal-close').addEventListener('click', pushFormCloseButton);
+    console.log(formInfo.id);
     catSubmitFormInfo(event, formInfo.id);
     editModalPopup.classList.remove("active");
     submitButtonEdit.removeEventListener('click', pushFormUpdateFor2Cats)
@@ -180,7 +158,6 @@ function pushFormUpdateButton(event) {
     editModalPopup.classList.remove("active");
     submitButtonEdit.removeEventListener('click', pushFormUpdateButton);
 }
-
 
 function catSubmitApiCats(id) {
     // event.preventDefault();
@@ -195,11 +172,11 @@ function catSubmitApiCats(id) {
             newFormInfo['image'] = !!e.value ? e.value : img.src;
             newFormInfoApiCat['img_link'] = !!e.value ? e.value : img.src;
         } else if (!!e.value && e.name !== "url") {
-            newFormInfo[e.name] = e.value;
-            newFormInfoApiCat[e.name] = e.value;
+            newFormInfo[e.name] = e.type === 'number' ? Number(e.value) : e.value;
+            newFormInfoApiCat[e.name] = e.type === 'number' ? Number(e.value) : e.value;
         }
     })
-    console.log(newFormInfo);
+    // console.log(newFormInfo);
 
     dataBaseApiCats = dataBaseApiCats.map(function(cat) {
         if (cat.id === id) {
@@ -209,28 +186,24 @@ function catSubmitApiCats(id) {
     return cat; 
     })
 
+
     api.updateApiCatById(id, newFormInfo)
      .then(function() {
         showUpdatedApiCat(newFormInfoApiCat, id)
+        updateLocalStorage(newFormInfoApiCat, {type: 'EDIT_CAT'});
     })
      .catch(function(err){
         console.log(err);
     })
 
-    // newFormInfoApiCat = {};
     newFormInfo = {};
     editForm.reset()
-    // closeEventListenersOnUpdButton()
 }
 
 function showUpdatedApiCat(newCatInfo, id) {
-    // dataBaseApiCats = [...dataBaseApiCats, ...newCatInfo]
-    // newData = {...currentApiCat, ...newCatInfo};
     let indexOfCat = dataBaseApiCats.length - dataBaseApiCats.findIndex(e => e.id === id) - 1;
-    console.log(indexOfCat);
 
     cardsContainer.removeChild(cardsContainer.children[indexOfCat]);
-    console.log(newCatInfo);
     const newElement = new Card(dataBaseApiCats[dataBaseApiCats.length - indexOfCat -1], "#card-template", handleClickCatImage);
     cardsContainer.insertBefore(newElement.getElement(), cardsContainer.children[indexOfCat]);
 
@@ -253,42 +226,101 @@ function openEditApiCardTriggerFunc(catData){
     openEditApiCardTriggerFunc(catData)
 })
 
+function showCardsApiCats(arr) {
+    arr.forEach(catData => {
+        const newElement = new Card(catData, "#card-template",handleClickCatImage);
+        cardsContainer.prepend(newElement.getElement());
+        const openEditApiCard = document.querySelector('.cards__container .card h2');
+        openEditApiCard.addEventListener('click', function data(event) {
+            popupInit(catData.id, dataBaseApiCats, event, this)
+        })
+    })
+}
+
 formCatAdd.addEventListener('submit', handleFormToCard)
 
 popupAdd.setEventListener();
 popupImage.setEventListener();
 popupLogin.setEventListener();
 
-api.getAllApiCats()
-  .then(data => {
-    // dataBaseApiCats = data;
-    dataBaseApiCats = data.map(({
-        favorite: favourite,
-        image: img_link,
-        ...rest
-    }) => ({
-        favourite,
-        img_link,
-        ...rest
-    }))
-    console.log(dataBaseApiCats);
-    showCardsApiCats(dataBaseApiCats)
- })
-  .catch(function(err){
-    console.log(err);
-    }) 
+btnAddCatPopup.addEventListener('click', (e) => {
+    e.preventDefault();
+    popupAdd.open();
+})
 
+btnOpenPopupLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    popupLogin.open();
+})
 
+function setDataRefresh(minute, key) {
+    const setTime = new Date(new Date().getTime()+minute*60000);
+    localStorage.setItem(key, setTime);
+    return setTime;
+}
 
+function updateLocalStorage(data, action) {
+    const oldStorage = JSON.parse(localStorage.getItem('cats'));
+
+    switch (action.type) {
+        case 'ADD_CAT':
+            oldStorage.push(data);
+            localStorage.setItem('cats', JSON.stringify(oldStorage))
+            return
+        case 'ALL_CATS':
+            setDataRefresh(MAX_LIVE_STORAGE, 'catsRefresh')
+            localStorage.setItem('cats', JSON.stringify(data))            
+            return;    
+        // case 'DELETE_CAT':
+        //     const newStorage = oldStorage.filter(cat => cat.id !== data.id)
+        //     localStorage.setItem('cats', JSON.stringify(newStorage))            
+        //     return;    
+        case 'EDIT_CAT':
+            const updateStorage = oldStorage.map(cat => cat.id !== data.id ? cat : {...data, ...cat});
+            localStorage.setItem('cats', JSON.stringify(updateStorage))            
+            return;    
+        default:
+            break;
+    }
+}
+
+function checkLocalStorage() {
+    const localData = JSON.parse(localStorage.getItem('cats'));
+    const getExpiredTime = localStorage.getItem('catsRefresh');
+
+    if(localData && localData.length && new Date() < new Date(getExpiredTime)) {
+        showCardsApiCats(localData);
+        dataBaseApiCats = localData;
+        console.log(localData);
+    } else {
+        api.getAllApiCats()
+        .then(data => {
+            dataBaseApiCats = data.map(({
+                favorite: favourite,
+                image: img_link,
+                ...rest
+            }) => ({
+                favourite,
+                img_link,
+                ...rest
+            }))
+            // localStorage.setItem('cats', JSON.stringify(dataBaseApiCats))
+            updateLocalStorage(dataBaseApiCats, {type: 'ALL_CATS'});
+            showCardsApiCats(dataBaseApiCats);
+            console.log(dataBaseApiCats);       
+        })      
+        .catch(function(err){
+                console.log(err);
+        }) 
+    }
+}
+
+checkLocalStorage()
 
 // popupImage.open('https://fikiwiki.com/uploads/posts/2022-02/1644991780_20-fikiwiki-com-p-prikolnie-kartinki-pro-kotov-21.jpg')
 
 
-
-
-
-
-
+// console.log(localStorage);
 
 
 
